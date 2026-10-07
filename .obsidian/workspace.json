@@ -170,12 +170,12 @@
               "title": "Outline"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -188,11 +188,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "6ff371c84acda721",
+  "active": "44a325124b7dd9a2",
   "lastOpenFiles": [
+    "README.md",
     "Pasted image 20261005223712.png",
     "Pasted image 20261005223648.png",
-    "Pasted image 20261005223531.png",
-    "README.md"
+    "Pasted image 20261005223531.png"
   ]
 }
