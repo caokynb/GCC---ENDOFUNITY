@@ -61,9 +61,9 @@ Chỉ số cơ bản:
 	-   AR (Attack Range) (Tính theo mét)
 	-   AS (Attack Speed) (Attack/s)
 	-   Mana cost
-#### Star Level
--   Cấp sao của các tinh linh: 1 sao -\> 3 sao.
--   Cấp sao của các quái vật ma quỷ: 1 -\> 4 sao.
+#### ~~Star Level~~
+-   ~~Cấp sao của các tinh linh: 1 sao -\> 3 sao.~~
+-   ~~Cấp sao của các quái vật ma quỷ: 1 -\> 4 sao.~~
 #### Magic Stone
 -   Đá phép.
 -   Là tiền tệ chính.

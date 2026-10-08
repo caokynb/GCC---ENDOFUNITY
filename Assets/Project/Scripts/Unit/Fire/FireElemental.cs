@@ -1,8 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FireElemental : MonoBehaviour
 {
     [SerializeField] private UnitSO unitData;
+    private Formula formula;
     public string unitName;
     public Element element;
     public int hp;
@@ -12,10 +14,20 @@ public class FireElemental : MonoBehaviour
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
-    public int level;
-    public int xp;
+    void Awake()
+    {
+        formula = new Formula();
+    }
     void GetStat()
     {
-        
+        unitName = unitData.unitName;
+        element = unitData.element;
+        hp = unitData.hp;
+        attack = unitData.attack;
+        defense = unitData.defense;
+        speed = unitData.speed;
+        attackRange = unitData.attackRange;
+        attackSpeed = unitData.attackSpeed;
+        manaCost = unitData.manaCost;
     }
 }

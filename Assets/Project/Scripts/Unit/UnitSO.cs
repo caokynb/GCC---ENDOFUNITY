@@ -13,8 +13,6 @@ public class UnitSO : ScriptableObject
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
-    public int level;
-    public int xp;
 }
 
 public enum Element
