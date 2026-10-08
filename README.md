@@ -121,6 +121,7 @@ Spirit {
     Star
 }
 ```
+
 |  Thuộc tính  |          Mô tả          |
 |:------------:|:-----------------------:|
 |     Name     |      Tên tinh linh      |
@@ -151,6 +152,7 @@ Demon {
     Star
 }
 ```
+
 |  Thuộc tính  |         Mô tả        |
 |:------------:|:--------------------:|
 |     Name     |     Tên quái vật     |
@@ -521,6 +523,7 @@ Demon {
     AttackRange,
     AttackSpeed,
     ManaCost,
+    Level,
     Star
 }
 ```

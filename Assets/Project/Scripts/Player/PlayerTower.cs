@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerTower : MonoBehaviour
 {
     private PlayerData player;
@@ -11,12 +10,6 @@ public class PlayerTower : MonoBehaviour
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int spiritLimit;
     [SerializeField] private List<int> upgrades = new List<int>{1,1,1};
-    public enum UpgradeType
-    {
-        MaxHp,
-        MaxMana,
-        ManaRegenRate
-    }
     void Awake()
     {
         player = new PlayerData();
