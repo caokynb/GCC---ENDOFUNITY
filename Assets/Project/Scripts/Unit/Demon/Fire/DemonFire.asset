@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c21c29f0dbad27a4f9642b1678e92e37, type: 3}
-  m_Name: UnitFire
+  m_Name: DemonFire
   m_EditorClassIdentifier: Assembly-CSharp::UnitSO
-  unitName: Fire Unit
+  unitName: Fire Demon
   element: 0
-  hp: 100
-  attack: 30
+  hp: 120
+  attack: 35
   defense: 10
-  speed: 5
+  speed: 1
   attackRange: 3
   attackSpeed: 1
-  manaCost: 75
+  manaCost: 90
