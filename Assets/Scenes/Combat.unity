@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 2003789294}
   - component: {fileID: 2003789293}
   - component: {fileID: 2003789292}
+  - component: {fileID: 2003789295}
   m_Layer: 0
   m_Name: TowerPlayer
   m_TagString: Untagged
@@ -534,63 +535,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2720067557773068496
-PrefabInstance:
+--- !u!114 &2003789295
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 717479036676186179, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_Name
-      value: FireElemental
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693274742411955519, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003789291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96ea8abd3a7899409248b77d1af47d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTower
+  maxHp: 0
+  hp: 0
+  mana: 0
+  maxMana: 0
+  manaRegenRate: 0
+  spiritLimit: 0
+  upgrades: 010000000100000001000000
+  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  transform: {fileID: 2003789294}
+  fireUnit: {fileID: 717479036676186179, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
 --- !u!1001 &9193271466522698037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -601,7 +567,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3072019665080321459, guid: a37e4afd618e727408d52a7cd6a3bba7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.71
+      value: 8.03
       objectReference: {fileID: 0}
     - target: {fileID: 3072019665080321459, guid: a37e4afd618e727408d52a7cd6a3bba7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -643,6 +609,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireDemon
       objectReference: {fileID: 0}
+    - target: {fileID: 7866099651632483002, guid: a37e4afd618e727408d52a7cd6a3bba7, type: 3}
+      propertyPath: fireUnit
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -655,5 +625,4 @@ SceneRoots:
   - {fileID: 268537954}
   - {fileID: 1714522117}
   - {fileID: 2003789294}
-  - {fileID: 2720067557773068496}
   - {fileID: 9193271466522698037}

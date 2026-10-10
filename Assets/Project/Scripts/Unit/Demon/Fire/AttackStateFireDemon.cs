@@ -1,27 +1,22 @@
+using System.Collections;
 using UnityEngine;
 public class AttackStateFireDemon : IState
 {
     private FireDemon fireDemon;
-    private DemonAttackManager attackManager;
-    private float timer;
+    private Coroutine beginAttack;
     public AttackStateFireDemon(FireDemon fireDemon)
     {
         this.fireDemon = fireDemon;
-        this.attackManager = fireDemon.attackManager;
     }
     public void Enter()
     {
-        timer = fireDemon.attackSpeed;
+        fireDemon.isAttacking=true;
         fireDemon.rb.linearVelocityX=0f;
+        beginAttack = fireDemon.StartCoroutine(StartAttack());
     }
     public void Tick()
     {
-        timer-=Time.deltaTime;
-        if(timer <= 0f)
-        {
-            attackManager.startAttack?.Invoke(0,fireDemon.attack);
-            timer=fireDemon.attackSpeed;
-        }
+        if(fireDemon.currentTarget == null) fireDemon.stateMachine.ChangeState(fireDemon.marchState);
     }
     public void FixedTick()
     {
@@ -29,7 +24,15 @@ public class AttackStateFireDemon : IState
     }
     public void Exit()
     {
-
+        fireDemon.StopCoroutine(StartAttack());
+    }
+    public IEnumerator StartAttack()
+    {
+        fireDemon.ad.enabled = false;
+        fireDemon.currentTarget.TakeDamage(fireDemon.attack);
+        yield return new WaitForSeconds(fireDemon.attackSpeed);
+        fireDemon.ad.enabled=true;
+        fireDemon.isAttacking=false;
     }
 
 }

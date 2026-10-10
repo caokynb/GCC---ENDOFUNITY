@@ -1,27 +1,22 @@
+using System.Collections;
 using UnityEngine;
 public class AttackStateFire : IState
 {
     private FireElemental fireUnit;
-    private ElementalAttackManager attackManager;
-    private float timer;
+    private Coroutine beginAttack;
     public AttackStateFire(FireElemental fireUnit)
     {
         this.fireUnit = fireUnit;
-        this.attackManager = fireUnit.attackManager;
     }
     public void Enter()
     {
-        timer = fireUnit.attackSpeed;
+        fireUnit.isAttacking=true;
         fireUnit.rb.linearVelocityX=0f;
+        beginAttack = fireUnit.StartCoroutine(StartAttack());
     }
     public void Tick()
     {
-        timer-=Time.deltaTime;
-        if(timer <= 0f)
-        {
-            attackManager.startAttack?.Invoke(0,fireUnit.attack);
-            timer=fireUnit.attackSpeed;
-        }
+        if(fireUnit.currentTarget == null) fireUnit.currentTarget.TakeDamage(fireUnit.attack);
     }
     public void FixedTick()
     {
@@ -29,7 +24,14 @@ public class AttackStateFire : IState
     }
     public void Exit()
     {
-
+        fireUnit.StopCoroutine(StartAttack());
     }
-
+    public IEnumerator StartAttack()
+    {
+        fireUnit.ad.enabled = false;
+        fireUnit.currentTarget.TakeDamage(fireUnit.attack);
+        yield return new WaitForSeconds(fireUnit.attackSpeed);
+        fireUnit.ad.enabled = true;
+        fireUnit.isAttacking = false;
+    }
 }

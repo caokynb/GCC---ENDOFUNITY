@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerTower : MonoBehaviour
 {
@@ -11,14 +12,18 @@ public class PlayerTower : MonoBehaviour
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int spiritLimit;
     [SerializeField] private List<int> upgrades = new List<int>{1,1,1};
-    public enum UpgradeType
+    [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private Transform transform;
+    private InputAction spawnAction;
+    [SerializeField] private GameObject fireUnit;
+    void OnEnable()
     {
-        MaxHp,
-        MaxMana,
-        ManaRegenRate
+        inputActions.FindActionMap("Player").Enable();
     }
+    
     void Awake()
     {
+        spawnAction = InputSystem.actions.FindAction("Spawn");
         player = new PlayerData();
         upgrades = new List<int>(player.upgrades);
         maxHp = Mathf.RoundToInt(player.maxHp + (upgrades[0]*0.1f));
@@ -28,4 +33,17 @@ public class PlayerTower : MonoBehaviour
         manaRegenRate = player.manaRegenRate + (upgrades[2]*0.05f);
         spiritLimit = player.spiritLimit;
     }
+    void Update()
+    {
+        if (spawnAction.WasPressedThisFrame())
+        {
+            Instantiate(fireUnit,transform.position,Quaternion.identity);
+        }
+    }
+}
+public enum UpgradeType
+{
+        MaxHp,
+        MaxMana,
+        ManaRegenRate
 }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class FireElemental : MonoBehaviour
+public class FireElemental : MonoBehaviour, IDamageable
 {
     [SerializeField] private UnitSO unitData;
     [SerializeField] public Rigidbody2D rb;
@@ -10,7 +10,7 @@ public class FireElemental : MonoBehaviour
     public StateMachine stateMachine;
     public MarchStateFire marchState;
     public AttackStateFire attackState;
-    public ElementalAttackManager attackManager;
+    public IDamageable currentTarget;
     private Formula formula;
     public string unitName;
     public Element element;
@@ -21,6 +21,7 @@ public class FireElemental : MonoBehaviour
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
+    public bool isAttacking;
     void Awake()
     {
         formula = new Formula();
@@ -65,6 +66,11 @@ public class FireElemental : MonoBehaviour
     {
         stateMachine.FixedTick();
     }
+    public void TakeDamage(int attack)
+    {
+        hp-=attack;
+        if(hp<=0) Death();
+    }
     void Death()
     {
         Destroy(gameObject);
@@ -73,11 +79,12 @@ public class FireElemental : MonoBehaviour
     {
         if (collider.CompareTag("Demon"))
         {
-            stateMachine.ChangeState(attackState);
+            currentTarget = collider.GetComponent<IDamageable>();
+            stateMachine.ForceSetState(attackState);
         }
     }
     void OnTriggerExit2D(Collider2D collider)
     {
-        stateMachine.ChangeState(marchState);
+        if(!isAttacking) stateMachine.ChangeState(marchState);
     }
 }
