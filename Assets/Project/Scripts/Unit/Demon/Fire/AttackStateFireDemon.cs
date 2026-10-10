@@ -10,7 +10,6 @@ public class AttackStateFireDemon : IState
     }
     public void Enter()
     {
-        fireDemon.isAttacking=true;
         fireDemon.rb.linearVelocityX=0f;
         beginAttack = fireDemon.StartCoroutine(StartAttack());
     }
@@ -28,11 +27,8 @@ public class AttackStateFireDemon : IState
     }
     public IEnumerator StartAttack()
     {
-        fireDemon.ad.enabled = false;
         fireDemon.currentTarget.TakeDamage(fireDemon.attack);
         yield return new WaitForSeconds(fireDemon.attackSpeed);
-        fireDemon.ad.enabled=true;
-        fireDemon.isAttacking=false;
     }
 
 }

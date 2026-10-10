@@ -6,12 +6,11 @@ public class FireDemon : MonoBehaviour, IDamageable
     [SerializeField] private UnitSO unitData;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public BoxCollider2D cd;
-    [SerializeField] public BoxCollider2D ad;
+    [SerializeField] public LayerMask layer;
     public StateMachine stateMachine;
     public MarchStateFireDemon marchState;
     public AttackStateFireDemon attackState;
     public IDamageable currentTarget;
-    private Formula formula;
     public string unitName;
     public Element element;
     public int hp;
@@ -21,10 +20,8 @@ public class FireDemon : MonoBehaviour, IDamageable
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
-    public bool isAttacking=false;
     void Awake()
     {
-        formula = new Formula();
         stateMachine = new StateMachine();
         marchState = new MarchStateFireDemon(this);
         attackState = new AttackStateFireDemon(this);
@@ -48,8 +45,6 @@ public class FireDemon : MonoBehaviour, IDamageable
         defense = unitData.defense;
         speed = unitData.speed;
         attackRange = unitData.attackRange;
-        ad.size = new Vector2(attackRange,0.5f);
-        ad.offset = new Vector2(attackRange/2f,0f);
         attackSpeed = unitData.attackSpeed;
         manaCost = unitData.manaCost; 
     }
@@ -60,10 +55,20 @@ public class FireDemon : MonoBehaviour, IDamageable
     void Update()
     {
         stateMachine.Tick();
+        AttackCheck();
     }
     void FixedUpdate()
     {
         stateMachine.FixedTick();
+    }
+    public void AttackCheck()
+    {
+        RaycastHit2D touched = Physics2D.Raycast(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0),layer);
+        if (touched.collider != null && touched.collider.CompareTag("Elemental"))
+        {
+            currentTarget=touched.collider.GetComponent<IDamageable>();
+            stateMachine.ForceSetState(attackState);
+        }
     }
     public void TakeDamage(int damage)
     {
@@ -74,16 +79,8 @@ public class FireDemon : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
     }
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnDrawGizmos()
     {
-        if (collider.CompareTag("Elemental"))
-        {
-            currentTarget=collider.GetComponent<IDamageable>();
-            stateMachine.ForceSetState(attackState);
-        }
-    }
-    void OnTriggerExit2D(Collider2D collider)
-    {
-        if(!isAttacking) stateMachine.ChangeState(marchState);
+        Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
     }
 }
