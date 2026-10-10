@@ -11,7 +11,7 @@ public class AttackStateFireDemon : IState
     public void Enter()
     {
         fireDemon.rb.linearVelocityX=0f;
-        beginAttack = fireDemon.StartCoroutine(StartAttack());
+        if(beginAttack==null) beginAttack = fireDemon.StartCoroutine(StartAttack());
     }
     public void Tick()
     {

@@ -64,8 +64,8 @@ public class FireElemental : MonoBehaviour, IDamageable
     }
     public void AttackCheck()
     {
-        RaycastHit2D touched = Physics2D.Raycast(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0),layer);
-        if (touched.collider != null && touched.collider.CompareTag("Demon"))
+        RaycastHit2D touched = Physics2D.Raycast(transform.position,Mathf.Sign(transform.localScale.x)*Vector3.one,attackRange/2f,layer);
+        if (touched.collider != null)
         {
             currentTarget=touched.collider.GetComponent<IDamageable>();
             stateMachine.ForceSetState(attackState);

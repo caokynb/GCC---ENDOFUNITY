@@ -11,7 +11,7 @@ public class AttackStateFire : IState
     public void Enter()
     {
         fireUnit.rb.linearVelocityX=0f;
-        beginAttack = fireUnit.StartCoroutine(StartAttack());
+        if(beginAttack==null) beginAttack = fireUnit.StartCoroutine(StartAttack());
     }
     public void Tick()
     {
