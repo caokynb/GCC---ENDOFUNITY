@@ -407,9 +407,9 @@ GameObject:
   - component: {fileID: 2003789293}
   - component: {fileID: 2003789292}
   - component: {fileID: 2003789295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TowerPlayer
-  m_TagString: Untagged
+  m_TagString: Elemental
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

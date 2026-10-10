@@ -23,11 +23,12 @@ public class AttackStateFire : IState
     }
     public void Exit()
     {
-        fireUnit.StopCoroutine(StartAttack());
+        
     }
     public IEnumerator StartAttack()
     {
         fireUnit.currentTarget.TakeDamage(fireUnit.attack);
         yield return new WaitForSeconds(fireUnit.attackSpeed);
+        beginAttack=null;
     }
 }

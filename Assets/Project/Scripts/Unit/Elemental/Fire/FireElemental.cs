@@ -70,6 +70,10 @@ public class FireElemental : MonoBehaviour, IDamageable
             currentTarget=touched.collider.GetComponent<IDamageable>();
             stateMachine.ForceSetState(attackState);
         }
+        else
+        {
+            stateMachine.ChangeState(marchState);
+        }
     }
     public void TakeDamage(int attack)
     {

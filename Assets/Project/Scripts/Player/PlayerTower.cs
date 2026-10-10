@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerTower : MonoBehaviour
+public class PlayerTower : MonoBehaviour, IDamageable
 {
     private PlayerData player;
     [SerializeField] private int maxHp;
@@ -39,6 +40,16 @@ public class PlayerTower : MonoBehaviour
         {
             Instantiate(fireUnit,transform.position,Quaternion.identity);
         }
+    }
+    public void TakeDamage(int damage)
+    {
+        hp-=damage;
+        Debug.Log($"Á hự, máu còn {Mathf.Clamp(hp,0,int.MaxValue)}");
+        if(hp<=0) Death();
+    }
+    void Death()
+    {
+        Time.timeScale=0;
     }
 }
 public enum UpgradeType
