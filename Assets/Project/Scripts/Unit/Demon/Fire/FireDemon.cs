@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class FireDemon : MonoBehaviour, IDamageable
@@ -6,6 +7,7 @@ public class FireDemon : MonoBehaviour, IDamageable
     [SerializeField] private UnitSO unitData;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public BoxCollider2D cd;
+    [SerializeField] public SpriteRenderer sprite;
     [SerializeField] public LayerMask layer;
     public StateMachine stateMachine;
     public MarchStateFireDemon marchState;
@@ -77,6 +79,7 @@ public class FireDemon : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         hp-=damage;
+        StartCoroutine(Flash());
         if(hp<=0) Death();
     }
     void Death()
@@ -86,5 +89,11 @@ public class FireDemon : MonoBehaviour, IDamageable
     void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
+    }
+    private IEnumerator Flash()
+    {   
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = Color.white;
     }
 }

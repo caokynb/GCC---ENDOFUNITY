@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,9 +11,9 @@ public class PlayerTower : MonoBehaviour, IDamageable
     [SerializeField] private float maxMana;
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int spiritLimit;
-    [SerializeField] private List<int> upgrades = new List<int>{1,1,1};
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private Transform transform;
+    [SerializeField] private SpriteRenderer sprite;
     private InputAction spawnAction;
     [SerializeField] private GameObject fireUnit;
     void OnEnable()
@@ -26,12 +25,14 @@ public class PlayerTower : MonoBehaviour, IDamageable
     {
         spawnAction = InputSystem.actions.FindAction("Spawn");
         player = new PlayerData();
-        upgrades = new List<int>(player.upgrades);
-        maxHp = Mathf.RoundToInt(player.maxHp + (upgrades[0]*0.1f));
+        GetStat();
+    }
+    void GetStat()
+    {
+        maxHp=player.maxHp;
+        mana=player.maxMana;
         hp = maxHp;
-        maxMana = player.maxMana + (upgrades[1]*0.15f);
         mana = maxMana;
-        manaRegenRate = player.manaRegenRate + (upgrades[2]*0.05f);
         spiritLimit = player.spiritLimit;
     }
     void Update()
@@ -45,16 +46,17 @@ public class PlayerTower : MonoBehaviour, IDamageable
     {
         hp-=damage;
         Debug.Log($"Á hự, máu còn {Mathf.Clamp(hp,0,int.MaxValue)}");
+        StartCoroutine(Flash());
         if(hp<=0) Death();
     }
     void Death()
     {
         Time.timeScale=0;
     }
-}
-public enum UpgradeType
-{
-        MaxHp,
-        MaxMana,
-        ManaRegenRate
+    private IEnumerator Flash()
+    {   
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = Color.white;
+    }
 }

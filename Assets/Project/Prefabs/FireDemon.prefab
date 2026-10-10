@@ -215,7 +215,7 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 9f4faeaba36db0f45a7d407d1227a847, type: 2}
   rb: {fileID: 539640882735785007}
   cd: {fileID: 3146557475748304001}
-  ad: {fileID: 0}
+  sprite: {fileID: 7899607196416854501}
   layer:
     serializedVersion: 2
     m_Bits: 64
