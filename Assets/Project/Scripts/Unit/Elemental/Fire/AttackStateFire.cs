@@ -27,8 +27,8 @@ public class AttackStateFire : IState
     }
     public IEnumerator StartAttack()
     {
-        fireUnit.currentTarget.TakeDamage(fireUnit.attack);
         yield return new WaitForSeconds(fireUnit.attackSpeed);
+        fireUnit.currentTarget.TakeDamage(fireUnit.attack);
         beginAttack=null;
     }
 }

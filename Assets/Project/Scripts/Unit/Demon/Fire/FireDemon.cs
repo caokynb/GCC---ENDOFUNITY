@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class FireDemon : MonoBehaviour, IDamageable
@@ -8,6 +9,7 @@ public class FireDemon : MonoBehaviour, IDamageable
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public BoxCollider2D cd;
     [SerializeField] public SpriteRenderer sprite;
+    [SerializeField] public TextMeshPro text;
     [SerializeField] public LayerMask layer;
     public StateMachine stateMachine;
     public MarchStateFireDemon marchState;
@@ -48,11 +50,12 @@ public class FireDemon : MonoBehaviour, IDamageable
         speed = unitData.speed;
         attackRange = unitData.attackRange;
         attackSpeed = unitData.attackSpeed;
-        manaCost = unitData.manaCost; 
+        manaCost = unitData.manaCost;
     }
     void Start()
     {
         stateMachine.ForceSetState(marchState);
+        RenderHp();
     }
     void Update()
     {
@@ -79,6 +82,7 @@ public class FireDemon : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         hp-=damage;
+        RenderHp();
         StartCoroutine(Flash());
         if(hp<=0) Death();
     }
@@ -86,9 +90,13 @@ public class FireDemon : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
     }
+    void RenderHp()
+    {
+        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
+    }
     void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
+        //Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
     }
     private IEnumerator Flash()
     {   

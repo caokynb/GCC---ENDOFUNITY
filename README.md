@@ -7,7 +7,7 @@ A 3 week solo jam for the finale of the unity course in GCC
 -   Tại sao lại làm theo thể loại này? Tại vì em chỉ thấy khá là hứng thú với thể loại này nhưng mà các game luôn có 1 vài thứ mà khiến em không ưng ý nên em sẽ làm theo cách của em vậy!
 # II. CONCEPT
 ## 1. Tổng quan game
--  **Title:** 
+-  **Title:** CTID (Center of Tower innovation and Defenses)
 -  **Genre:** Tower Defense
 -  **Art style:** 
 -  **One rule:** Do not overdose

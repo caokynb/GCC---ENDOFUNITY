@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class FireElemental : MonoBehaviour, IDamageable
@@ -8,6 +9,7 @@ public class FireElemental : MonoBehaviour, IDamageable
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public BoxCollider2D cd;
     [SerializeField] public SpriteRenderer sprite;
+    [SerializeField] private TextMeshPro text;
     [SerializeField] public LayerMask layer;
     public StateMachine stateMachine;
     public MarchStateFire marchState;
@@ -54,6 +56,7 @@ public class FireElemental : MonoBehaviour, IDamageable
     void Start()
     {
         stateMachine.ForceSetState(marchState);
+        RenderHp();
     }
     void Update()
     {
@@ -80,6 +83,7 @@ public class FireElemental : MonoBehaviour, IDamageable
     public void TakeDamage(int attack)
     {
         hp-=attack;
+        RenderHp();
         StartCoroutine(Flash());
         if(hp<=0) Death();
     }
@@ -87,9 +91,13 @@ public class FireElemental : MonoBehaviour, IDamageable
     {
         Destroy(gameObject);
     }
+    void RenderHp()
+    {
+        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
+    }
     void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
+       // Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
     }
     private IEnumerator Flash()
     {   

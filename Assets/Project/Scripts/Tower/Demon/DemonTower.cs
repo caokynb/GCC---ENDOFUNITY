@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerTower : MonoBehaviour, IDamageable
+public class DemonTower : MonoBehaviour, IDamageable
 {
     private PlayerData player;
     [SerializeField] private int maxHp;
@@ -14,8 +16,9 @@ public class PlayerTower : MonoBehaviour, IDamageable
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private Transform transform;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private TextMeshPro text;
     private InputAction spawnAction;
-    [SerializeField] private GameObject fireUnit;
+    [SerializeField] private GameObject fireDemon;
     void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
@@ -23,35 +26,43 @@ public class PlayerTower : MonoBehaviour, IDamageable
     
     void Awake()
     {
-        spawnAction = InputSystem.actions.FindAction("Spawn");
+        spawnAction = InputSystem.actions.FindAction("Spawn_D");
         player = new PlayerData();
         GetStat();
     }
     void GetStat()
     {
-        maxHp=player.maxHp;
+        maxHp= (int)Math.Pow(player.maxHp,1.01f);
         mana=player.maxMana;
         hp = maxHp;
         mana = maxMana;
         spiritLimit = player.spiritLimit;
     }
+    void Start()
+    {
+        RenderHp();
+    }
     void Update()
     {
         if (spawnAction.WasPressedThisFrame())
         {
-            Instantiate(fireUnit,transform.position,Quaternion.identity);
+            Instantiate(fireDemon,transform.position,   Quaternion.identity);
         }
     }
     public void TakeDamage(int damage)
     {
         hp-=damage;
-        Debug.Log($"Á hự, máu còn {Mathf.Clamp(hp,0,int.MaxValue)}");
+        RenderHp();
         StartCoroutine(Flash());
         if(hp<=0) Death();
     }
     void Death()
     {
         Time.timeScale=0;
+    }
+    void RenderHp()
+    {
+        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
     }
     private IEnumerator Flash()
     {   
