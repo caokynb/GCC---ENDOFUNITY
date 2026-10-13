@@ -10,10 +10,11 @@ public class FireElemental : MonoBehaviour, IDamageable
     [SerializeField] public BoxCollider2D cd;
     [SerializeField] public SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
+    [SerializeField] public Animator anim;
     [SerializeField] public LayerMask layer;
-    public StateMachine stateMachine;
-    public MarchStateFire marchState;
-    public AttackStateFire attackState;
+    public StateMachine stateMachine {get; private set;}
+    public EF_MarchState marchState {get; private set;}
+    public EF_AttackState attackState {get; private set;}
     public IDamageable currentTarget;
     public string unitName;
     public Element element;
@@ -27,8 +28,8 @@ public class FireElemental : MonoBehaviour, IDamageable
     void Awake()
     {
         stateMachine = new StateMachine();
-        marchState = new MarchStateFire(this);
-        attackState = new AttackStateFire(this);
+        marchState = new EF_MarchState(this);
+        attackState = new EF_AttackState(this);
         GetStat();
     }
 
@@ -60,6 +61,7 @@ public class FireElemental : MonoBehaviour, IDamageable
     }
     void Update()
     {
+        anim.SetFloat("Speed",Math.Sign(Mathf.Abs(rb.linearVelocityX)));
         stateMachine.Tick();
         AttackCheck();
     }
@@ -95,14 +97,11 @@ public class FireElemental : MonoBehaviour, IDamageable
     {
         text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
     }
-    void OnDrawGizmos()
-    {
-       // Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
-    }
     private IEnumerator Flash()
     {   
+        Color org = sprite.color;
         sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        sprite.color = Color.white;
+        sprite.color = org;
     }
 }

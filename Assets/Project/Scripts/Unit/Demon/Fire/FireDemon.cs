@@ -11,9 +11,10 @@ public class FireDemon : MonoBehaviour, IDamageable
     [SerializeField] public SpriteRenderer sprite;
     [SerializeField] public TextMeshPro text;
     [SerializeField] public LayerMask layer;
-    public StateMachine stateMachine;
-    public MarchStateFireDemon marchState;
-    public AttackStateFireDemon attackState;
+    [SerializeField] public Animator anim;
+    public StateMachine stateMachine {get; private set;}
+    public DF_MarchState marchState {get; private set;}
+    public DF_AttackState attackState {get; private set;}
     public IDamageable currentTarget;
     public string unitName;
     public Element element;
@@ -27,8 +28,8 @@ public class FireDemon : MonoBehaviour, IDamageable
     void Awake()
     {
         stateMachine = new StateMachine();
-        marchState = new MarchStateFireDemon(this);
-        attackState = new AttackStateFireDemon(this);
+        marchState = new DF_MarchState(this);
+        attackState = new DF_AttackState(this);
         GetStat();
     }
 
@@ -59,6 +60,7 @@ public class FireDemon : MonoBehaviour, IDamageable
     }
     void Update()
     {
+        anim.SetFloat("Speed",Math.Sign(Mathf.Abs(rb.linearVelocityX)));
         stateMachine.Tick();
         AttackCheck();
     }
@@ -94,14 +96,11 @@ public class FireDemon : MonoBehaviour, IDamageable
     {
         text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
     }
-    void OnDrawGizmos()
-    {
-        //Gizmos.DrawRay(transform.position,new Vector3(Mathf.Sign(transform.localScale.x)*attackRange/2f,0,0));
-    }
     private IEnumerator Flash()
-    {   
+    {  
+        Color org = sprite.color;
         sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        sprite.color = Color.white;
+        sprite.color = org;
     }
 }

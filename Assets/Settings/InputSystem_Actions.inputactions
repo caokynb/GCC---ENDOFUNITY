@@ -17,6 +17,26 @@
                     "priority": 0
                 },
                 {
+                    "name": "Spawn2",
+                    "type": "Button",
+                    "id": "9cfca1bd-b2f4-4b46-aea5-56c4a778d90b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Spawn3",
+                    "type": "Button",
+                    "id": "c29e693f-ac86-48b9-9c94-f8f6f4e695b6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
                     "name": "Spawn_D",
                     "type": "Button",
                     "id": "c4b526a8-8068-4ecc-bafe-ba6a249a8d6c",
@@ -47,6 +67,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Spawn_D",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "671a09bd-06dc-4523-b2b4-8f724d851b97",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spawn2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3345e0d5-da47-4681-b896-dc63cef4e8ec",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spawn3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

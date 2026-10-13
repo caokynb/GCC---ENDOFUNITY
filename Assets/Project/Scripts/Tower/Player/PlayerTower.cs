@@ -16,8 +16,11 @@ public class PlayerTower : MonoBehaviour, IDamageable
     [SerializeField] private Transform transform;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
-    private InputAction spawnAction;
     [SerializeField] private GameObject fireUnit;
+    private InputAction spawnAction;
+    private InputAction spawnAction2;
+    private InputAction spawnAction3;
+    
     void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
@@ -26,6 +29,8 @@ public class PlayerTower : MonoBehaviour, IDamageable
     void Awake()
     {
         spawnAction = InputSystem.actions.FindAction("Spawn");
+        spawnAction2 = InputSystem.actions.FindAction("Spawn2");
+        spawnAction3 = InputSystem.actions.FindAction("Spawn3");
         player = new PlayerData();
         GetStat();
     }

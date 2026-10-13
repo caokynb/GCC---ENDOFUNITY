@@ -9,7 +9,7 @@ A 3 week solo jam for the finale of the unity course in GCC
 ## 1. Tổng quan game
 -  **Title:** CTID (Center of Tower innovation and Defenses)
 -  **Genre:** Tower Defense
--  **Art style:** 
+-  **Art style:** Pixel
 -  **One rule:** Do not overdose
 -  Bối cảnh được lấy tại một thế giới tồn tại ma thuật. Nhân vật chính tên là `<TÊN TỰ ĐẶT>` trên hành trình đi một vòng quanh thế giới của mình. Nhưng thế giới này đầy rẫy quái vật và ma quỷ nên cậu đã học phép triệu hồi các tinh linh nguyên tố để giúp đỡ bản thân trong cuộc hành trình gian nan của mình.
 ## 2. Thành phần trong game
