@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,14 +15,17 @@ public class PlayerTower : MonoBehaviour, IDamageable
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int spiritLimit;
     [SerializeField] private InputActionAsset inputActions;
-    [SerializeField] private Transform transform;
+    [SerializeField] private Transform tf;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
+    [SerializeField] private TextMeshPro textM;
     [SerializeField] private GameObject fireUnit;
+    [SerializeField] private GameObject waterUnit;
     private InputAction spawnAction;
     private InputAction spawnAction2;
     private InputAction spawnAction3;
-    
+    public int currentSpirits=0;
+    private float timer;
     void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
@@ -37,10 +42,13 @@ public class PlayerTower : MonoBehaviour, IDamageable
     void GetStat()
     {
         maxHp=player.maxHp;
-        mana=player.maxMana;
+        maxMana=player.maxMana;
+        manaRegenRate=player.manaRegenRate;
         hp = maxHp;
         mana = maxMana;
         spiritLimit = player.spiritLimit;
+        currentSpirits=0;
+        timer=1f;
     }
     void Start()
     {
@@ -48,15 +56,39 @@ public class PlayerTower : MonoBehaviour, IDamageable
     }
     void Update()
     {
-        if (spawnAction.WasPressedThisFrame())
+        RenderMana();
+        RenderHp();
+        mana=Mathf.Clamp(mana,0,maxMana);
+        if (spawnAction.WasPressedThisFrame() && mana>=75)
         {
-            Instantiate(fireUnit,transform.position,Quaternion.identity);
+            Instantiate(fireUnit,tf.position,Quaternion.identity);
+            mana-=75;
+            currentSpirits++;
+        }
+        if (spawnAction2.WasPressedThisFrame() && mana>=90)
+        {
+            Instantiate(waterUnit,tf.position,Quaternion.identity);
+            mana-=90;
+            currentSpirits++;
         }
     }
-    public void TakeDamage(int damage)
+    void FixedUpdate()
     {
-        hp-=damage;
+        if (currentSpirits > spiritLimit)
+        {
+            if(timer>0f) timer-=Time.deltaTime;
+            else 
+            {
+                TakeDamage((int)(maxHp*Mathf.Pow(0.02f,1f/(currentSpirits-spiritLimit))),0);
+                timer=1f;
+            }
+        }
+        mana+=manaRegenRate;
+    }
+    public void TakeDamage(int damage,Element e)
+    {
         RenderHp();
+        hp-=damage;
         StartCoroutine(Flash());
         if(hp<=0) Death();
     }
@@ -66,7 +98,11 @@ public class PlayerTower : MonoBehaviour, IDamageable
     }
     void RenderHp()
     {
-        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
+        text.text = $"{Mathf.Clamp(hp, 0, int.MaxValue):F0}";
+    }
+    void RenderMana()
+    {
+        textM.text = $"{Mathf.Clamp(mana,0,maxMana):F0}";
     }
     private IEnumerator Flash()
     {   

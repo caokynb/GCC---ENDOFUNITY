@@ -13,24 +13,6 @@ A 3 week solo jam for the finale of the unity course in GCC
 -  **One rule:** Do not overdose
 -  Bối cảnh được lấy tại một thế giới tồn tại ma thuật. Nhân vật chính tên là `<TÊN TỰ ĐẶT>` trên hành trình đi một vòng quanh thế giới của mình. Nhưng thế giới này đầy rẫy quái vật và ma quỷ nên cậu đã học phép triệu hồi các tinh linh nguyên tố để giúp đỡ bản thân trong cuộc hành trình gian nan của mình.
 ## 2. Thành phần trong game
-### 2.1. Thành phần UI
-#### Màn hình chính
--   **Chơi mới:** Đặt tên cho nhân vật.
--   **Tiếp tục:** Tiếp tục chơi (chỉ có 1 file save).
--   **Cài đặt:** Âm thanh Master, SFX, Music (nếu có).
--   **Thoát:** Thoát game.
-#### Menu
--   **Bản đồ:** Có các nút chọn màn.
--   **Loadout:** Có các tinh linh khác nhau để mình chọn được loadout
-    khi chiến đấu.
--   **Nút thoát:** Thoát ra ngoài màn hình chính.
-#### Trong game
--   **Nút triệu hồi các tinh linh**
--   **Nút Power:** TẠM THỜI KHÔNG THÊM VÀO.
--   **Nút tạm dừng:**
-    -   Tiếp tục.
-    -   Thoát màn.
-### 2.2. Thành phần chính trong game
 #### Nhân vật chính (Tháp)
 Chỉ số cơ bản:
 -   HP
@@ -279,23 +261,11 @@ Current Active Spirit > Active Spirit Limit
 thì người chơi bị Overdose.
 #### Overdose Effect 1 - HP Drain
 Player Tower bị drain HP liên tục:
-``` text
-HP Drain = 0.2% Max HP / second
-```
 #### Overdose Effect 2 - Spirit Stat Penalty
 Tất cả các chỉ số của Spirit bị giảm theo từng Spirit vượt quá giới hạn:
-``` text
-Mỗi Spirit vượt giới hạn:
-×0.975
-```
-Penalty được cộng dồn.
-Ví dụ:
-``` text
-+1 Spirit → ×0.975
-+2 Spirits → ×0.975²
-+3 Spirits → ×0.975³
-v.v
-```
+Penalty được cộng dồn theo công thức:
+$$\text{Tower HP Drain/s} = \text{MaxHP} \cdot \sqrt[\text{currentSpirits} - \text{spiritsLimit}]{0.02}$$
+$$\text{Damage Penalty} = \text{baseDamage} \cdot 0.935^{\text{currentSpirits} - \text{spiritsLimit}}$$
 Flow:
 ``` text
 Check Active Spirits
@@ -311,7 +281,6 @@ Current > Limit?
         ┌──────┴──────┐
         ▼             ▼
     HP Drain     Stat Penalty
-   0.2% MaxHP/s   ×0.975 / extra Spirit
 ```
 ### 3.11. Demon Spawn
 Mỗi màn thì Demon cũng có một set quái vật để spawn.
@@ -388,11 +357,11 @@ Start Mana Generation
        ▼         ▼
      Lose       Win
 ```
-## 4. Progression
-### 4.1. Spirit Level
-Tinh linh tham gia các trận chiến và hoàn thành sẽ được tăng EXP và sẽ
-tăng level.
-Flow:
+## ~~4. Progression~~
+### ~~4.1. Spirit Level~~
+~~Tinh linh tham gia các trận chiến và hoàn thành sẽ được tăng EXP và sẽ~~
+~~tăng level.~~
+~~Flow:~~
 ``` text
 Battle Completed
        │
@@ -409,13 +378,13 @@ EXP >= Required EXP?
              ▼
         Spirit Level Up
 ```
-### 4.2. Spirit Star
-Tinh linh max level sẽ có thể được tăng cấp sao bằng lượng lớn đá phép.
-Spirit có:
+### ~~4.2. Spirit Star~~
+~~Tinh linh max level sẽ có thể được tăng cấp sao bằng lượng lớn đá phép.~~
+~~Spirit có:~~
 ``` text
 1 Star → 2 Star → 3 Star
 ```
-Điều kiện:
+~~Điều kiện:~~
 ``` text
 Spirit Max Level
        +
@@ -424,13 +393,13 @@ Required Magic Stones
        ▼
     Star Up
 ```
-### 4.3. Player Upgrade
-Các chỉ số có thể nâng cấp:
--   Lượng Mana.
--   Tốc độ hồi Mana.
--   HP.
--   Power - TẠM THỜI KHÔNG THÊM VÀO.
-Cấu trúc:
+### ~~4.3. Player Upgrade~~
+~~Các chỉ số có thể nâng cấp:~~
+-   ~~Lượng Mana.~~
+-   ~~Tốc độ hồi Mana.~~
+-   ~~HP.~~
+-   ~~Power - TẠM THỜI KHÔNG THÊM VÀO.~~
+~~Cấu trúc:~~
 ``` text
 PlayerUpgrade {
     MaxMana,
@@ -439,8 +408,8 @@ PlayerUpgrade {
     // Power
 }
 ```
-### 4.4. Player Progression
-Progression chính:
+### ~~4.4. Player Progression~~
+~~Progression chính:~~
 ``` text
 Qua màn
    ↓
@@ -454,114 +423,7 @@ Nâng cấp nhân vật
    ↓
 Phá đảo
 ```
-# III. GAME ELEMENTS
-## 1. Player Tower
-Player Tower là tháp của người chơi.
-``` text
-PlayerTower {
-    HP,
-    Mana,
-    MaxMana,
-    ManaRegen,
-    ActiveSpiritLimit,
-    Upgrades[]
-}
-```
-
-|       Property      |                     Description                     |
-|:-------------------:|:---------------------------------------------------:|
-|          HP         |              Lượng máu của Player Tower             |
-|         Mana        |                    Mana hiện tại                    |
-|       Max Mana      |                     Mana tối đa                     |
-|      Mana Regen     |                   Tốc độ hồi Mana                   |
-| Active Spirit Limit | Số lượng Spirit được phép active trước khi Overdose |
-|       Upgrades      |               Các nâng cấp của Player               |
-## 2. Demon Tower
-``` text
-DemonTower {
-    HP,
-    Mana,
-    MaxMana,
-    ManaRegen,
-    DemonSet[]
-}
-```
-
-|  Property  |           Description           |
-|:----------:|:-------------------------------:|
-|     HP     |    Lượng máu của Demon Tower    |
-|    Mana    |       Mana của Demon Tower      |
-|  Max Mana  |           Mana tối đa           |
-| Mana Regen |         Tốc độ hồi Mana         |
-|  Demon Set | Các Demon mà Tower có thể spawn |
-## 3. Spirit
-``` text
-Spirit {
-    Name,
-    Element,
-    HP,
-    ATK,
-    DEF,
-    SPD,
-    AttackRange,
-    AttackSpeed,
-    ManaCost,
-    Level,
-    Star
-}
-```
-Spirit là đơn vị chiến đấu chính của người chơi.
-## 4. Demon
-``` text
-Demon {
-    Name,
-    Element,
-    HP,
-    ATK,
-    DEF,
-    SPD,
-    AttackRange,
-    AttackSpeed,
-    ManaCost,
-    Level,
-    Star
-}
-```
-Demon là đơn vị chiến đấu do Demon Tower spawn.
-## 5. Element
-``` text
-Element {
-    Water,
-    Fire,
-    Wood
-}
-```
-Quan hệ:
-``` text
-Water > Fire
-Fire > Wood
-Wood > Water
-```
-Modifier:
-``` text
-Strong → ×1.25 ATK
-Weak   → ×0.8 ATK
-Neutral → ×1.0 ATK
-```
-## 6. Overdose
-``` text
-Overdose {
-    ActiveSpiritLimit,
-    HPDrain = 0.2% MaxHP/s,
-    StatMultiplier = 0.975
-}
-```
-Mỗi Spirit vượt quá giới hạn tạo thêm một lần `×0.975` lên các chỉ số của
-Spirit.
-## 7. Magic Stone
-Magic Stone là tiền tệ chính của game.
-Được dùng cho progression, đặc biệt là tăng Star của Spirit.
-# IV. LEVELS
+# III. LEVELS
 ## 1. Level Structure
 Mỗi level bao gồm:
 ``` text
@@ -611,103 +473,7 @@ Level 3
 Final Level
 ```
 Số lượng level cụ thể: `[To Be Determined]`.
-# V. ECONOMY
-## 1. Magic Stone
-Magic Stone là tiền tệ chính.
-### Sources
-``` text
-Complete Level
-      │
-      ▼
-Receive Magic Stone
-```
-### Uses
-``` text
-Magic Stone
-    │
-    ├──► Spirit Star Up
-    │
-    └──► Other Upgrades
-```
-## 2. Battle Reward
-Sau khi thắng:
-``` text
-Victory
-  │
-  ├──► Magic Stone
-  ├──► Player EXP
-  └──► Spirit EXP
-```
-Số lượng cụ thể: `[TBD]`.
-## 3. Upgrade Cost
-Chi phí nâng cấp cụ thể chưa được xác định.
-``` text
-UpgradeCost {
-    UpgradeType,
-    CurrentLevel,
-    RequiredMagicStone
-}
-```
-# VI. UI / UX
-## 1. Main Menu
-``` text
-Main Menu
-├── Chơi mới
-├── Tiếp tục
-├── Cài đặt
-└── Thoát
-```
-### Chơi mới
--   Đặt tên cho nhân vật.
--   Tạo save mới.
-### Tiếp tục
--   Tiếp tục từ file save.
--   Chỉ có 1 file save.
-### Cài đặt
--   Master
--   SFX
--   Music
-### Thoát
--   Thoát game.
-## 2. Game Menu
-``` text
-Game Menu
-├── Bản đồ
-├── Loadout
-└── Thoát
-```
-## 3. Map
-Có các nút để lựa chọn màn.
-## 4. Loadout
-Cho phép lựa chọn các Spirit trước khi chiến đấu.
-``` text
-Owned Spirits
-      │
-      ▼
-Select Spirits
-      │
-      ▼
-Create Loadout
-      │
-      ▼
-Start Battle
-```
-Số lượng Spirit tối đa trong Loadout: `5`.
-## 5. Battle UI
-Thành phần:
--   Nút triệu hồi Spirit.
--   Mana.
--   Player HP.
--   Demon Tower HP.
--   Nút Pause.
--   Nút Power --- TẠM THỜI KHÔNG THÊM VÀO.
-## 6. Pause Menu
-``` text
-Pause
-├── Tiếp tục
-└── Thoát màn
-```
-# VII. GAME FLOW
+# IV. GAME FLOW
 ``` text
                     START
                       │
@@ -767,7 +533,7 @@ Pause
           ▼
       Next Level
 ```
-# VIII. SAVE DATA
+# V. SAVE DATA
 Game hiện tại sử dụng **1 file save**.
 Cấu trúc dự kiến:
 ``` text

@@ -62,7 +62,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!61 &8385050313689157524
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4deb015bc0e4e42a56874cec126cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireElemental
+  player: {fileID: 2521795519430524285, guid: ec8ba6e7a60c3d547bd333332bf6fa8f, type: 3}
   unitData: {fileID: 11400000, guid: 194233c122900954188a3e0408ffea6d, type: 2}
   rb: {fileID: 6468008292085433734}
   cd: {fileID: 8385050313689157524}
@@ -139,6 +140,7 @@ MonoBehaviour:
   attackRange: 0
   attackSpeed: 0
   manaCost: 0
+  attacking: 0
 --- !u!1 &5076184397702465893
 GameObject:
   m_ObjectHideFlags: 0

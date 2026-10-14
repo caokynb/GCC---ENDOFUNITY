@@ -372,7 +372,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!61 &3146557475748304001
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -431,6 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8389333857e5df4f8155405af5633ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireDemon
+  demon: {fileID: 8764441913410417299, guid: 0d1326117d9b4e74c9dcf07087a5d76f, type: 3}
   unitData: {fileID: 11400000, guid: 9f4faeaba36db0f45a7d407d1227a847, type: 2}
   rb: {fileID: 539640882735785007}
   cd: {fileID: 3146557475748304001}
@@ -449,3 +450,4 @@ MonoBehaviour:
   attackRange: 0
   attackSpeed: 0
   manaCost: 0
+  attacking: 0

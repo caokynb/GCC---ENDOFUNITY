@@ -10,12 +10,13 @@ public class EF_AttackState : IState
     }
     public void Enter()
     {
+        fireUnit.attacking=true;
         fireUnit.rb.linearVelocityX=0f;
         if(beginAttack==null) beginAttack = fireUnit.StartCoroutine(StartAttack());
     }
     public void Tick()
     {
-        if(fireUnit.currentTarget == null) fireUnit.stateMachine.ChangeState(fireUnit.marchState);
+
     }
     public void FixedTick()
     {
@@ -23,7 +24,7 @@ public class EF_AttackState : IState
     }
     public void Exit()
     {
-        
+        fireUnit.attacking=false;
     }
     public IEnumerator StartAttack()
     {

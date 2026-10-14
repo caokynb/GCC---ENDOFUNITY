@@ -11,11 +11,12 @@ public class DF_AttackState : IState
     public void Enter()
     {
         fireDemon.rb.linearVelocityX=0f;
+        fireDemon.attacking=true;
         if(beginAttack==null) beginAttack = fireDemon.StartCoroutine(StartAttack());
     }
     public void Tick()
     {
-        if(fireDemon.currentTarget == null) fireDemon.stateMachine.ChangeState(fireDemon.marchState);
+        
     }
     public void FixedTick()
     {
@@ -23,7 +24,7 @@ public class DF_AttackState : IState
     }
     public void Exit()
     {
-        
+        fireDemon.attacking=false;
     }
     public IEnumerator StartAttack()
     {

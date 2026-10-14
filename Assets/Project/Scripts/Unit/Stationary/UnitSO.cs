@@ -9,15 +9,14 @@ public class UnitSO : ScriptableObject
     public int hp;
     public int attack;
     public int defense;
-    public int speed;
+    public float speed;
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
 }
-
 public enum Element
 {
-    Fire,
-    Water,
-    Wood
+    Fire = 0,
+    Water = 1,
+    Wood = 2
 }

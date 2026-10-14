@@ -14,7 +14,7 @@ public class DemonTower : MonoBehaviour, IDamageable
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int spiritLimit;
     [SerializeField] private InputActionAsset inputActions;
-    [SerializeField] private Transform transform;
+    [SerializeField] private Transform tf;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
     private InputAction spawnAction;
@@ -32,8 +32,8 @@ public class DemonTower : MonoBehaviour, IDamageable
     }
     void GetStat()
     {
-        maxHp= (int)Math.Pow(player.maxHp,1.01f);
-        mana=player.maxMana;
+        maxHp = (int)Mathf.Pow(player.maxHp,1.2f);
+        mana = player.maxMana;
         hp = maxHp;
         mana = maxMana;
         spiritLimit = player.spiritLimit;
@@ -46,10 +46,10 @@ public class DemonTower : MonoBehaviour, IDamageable
     {
         if (spawnAction.WasPressedThisFrame())
         {
-            Instantiate(fireDemon,transform.position,   Quaternion.identity);
+            Instantiate(fireDemon,tf.position,Quaternion.identity);
         }
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Element e)
     {
         hp-=damage;
         RenderHp();

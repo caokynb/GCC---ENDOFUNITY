@@ -5,6 +5,10 @@ public class EF_EventManager : MonoBehaviour
     [SerializeField] public FireElemental fireUnit;
     public void Attack()
     {
-        fireUnit.currentTarget.TakeDamage(fireUnit.attack);
+        fireUnit.currentTarget.TakeDamage(fireUnit.attack,Element.Fire);
+    }
+    public void Die()
+    {
+        fireUnit.Death();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FireElemental : MonoBehaviour, IDamageable
 {
+    [SerializeField] private PlayerTower player;
     [SerializeField] private UnitSO unitData;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public BoxCollider2D cd;
@@ -21,10 +22,12 @@ public class FireElemental : MonoBehaviour, IDamageable
     public int hp;
     public int attack;
     public int defense;
-    public int speed;
+    public float speed;
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
+    public bool attacking;
+    private float outTimer;
     void Awake()
     {
         stateMachine = new StateMachine();
@@ -53,6 +56,7 @@ public class FireElemental : MonoBehaviour, IDamageable
         attackRange = unitData.attackRange;
         attackSpeed = unitData.attackSpeed;
         manaCost = unitData.manaCost; 
+        outTimer=0.5f;
     }
     void Start()
     {
@@ -71,7 +75,7 @@ public class FireElemental : MonoBehaviour, IDamageable
     }
     public void AttackCheck()
     {
-        RaycastHit2D touched = Physics2D.Raycast(transform.position,Mathf.Sign(transform.localScale.x)*Vector3.one,attackRange/2f,layer);
+        RaycastHit2D touched = Physics2D.Raycast(transform.position,new Vector3(Mathf.Sign(transform.localScale.x),0,0),attackRange,layer);
         if (touched.collider != null)
         {
             currentTarget=touched.collider.GetComponent<IDamageable>();
@@ -79,23 +83,52 @@ public class FireElemental : MonoBehaviour, IDamageable
         }
         else
         {
-            stateMachine.ChangeState(marchState);
+            if(attacking)
+            {
+                if(outTimer>0f) outTimer-=Time.deltaTime;
+                else 
+                {
+                    outTimer=0.5f;
+                    stateMachine.ChangeState(marchState);
+                }
+            }
         }
     }
-    public void TakeDamage(int attack)
+    public void TakeDamage(int attack, Element e)
     {
-        hp-=attack;
+        float penalty=1f;
+        switch (element)
+        {
+        case Element.Fire:
+            if (e == Element.Water) penalty = 1.1f;
+            else if (e == Element.Wood) penalty = 0.8f;
+            break;
+        case Element.Water:
+            if (e == Element.Wood) penalty = 1.1f;
+            else if (e == Element.Fire) penalty = 0.8f;
+            break;
+        case Element.Wood:
+            if (e == Element.Fire) penalty = 1.1f;
+            else if (e == Element.Water) penalty = 0.8f;
+            break;
+        }
+        hp-=(int)(attack*penalty-defense);
         RenderHp();
         StartCoroutine(Flash());
-        if(hp<=0) Death();
+        if(hp<=0)
+        {
+            cd.enabled=false;
+            anim.Play("EF_Death");
+        }
     }
-    void Death()
+    public void Death()
     {
+        player.currentSpirits--;
         Destroy(gameObject);
     }
     void RenderHp()
     {
-        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
+        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue):F0}";
     }
     private IEnumerator Flash()
     {   

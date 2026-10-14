@@ -1,11 +1,17 @@
 using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerData
 {
-    public int maxHp = 100;
-    public float maxMana = 100f;
-    public float manaRegenRate = 5f;
-    public int spiritLimit = 5;
+    public int maxHp;
+    public float maxMana;
+    public float manaRegenRate;
+    public int spiritLimit;
     public List<int> upgrades = new List<int>{0,0,0};
+    public PlayerData()
+    {
+        maxHp = 100;
+        maxMana = 100f;
+        manaRegenRate = 0.5f;
+        spiritLimit = 3;
+        upgrades = new List<int> { 0, 0, 0 };
+    }
 }
