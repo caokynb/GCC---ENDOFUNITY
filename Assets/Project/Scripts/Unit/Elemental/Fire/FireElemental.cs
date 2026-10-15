@@ -118,12 +118,13 @@ public class FireElemental : MonoBehaviour, IDamageable
         if(hp<=0)
         {
             cd.enabled=false;
+            rb.constraints=RigidbodyConstraints2D.FreezePositionX;
             anim.Play("EF_Death");
         }
     }
     public void Death()
     {
-        player.currentSpirits--;
+        player.UpdateSpirit(false);
         Destroy(gameObject);
     }
     void RenderHp()

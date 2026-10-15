@@ -63,13 +63,13 @@ public class PlayerTower : MonoBehaviour, IDamageable
         {
             Instantiate(fireUnit,tf.position,Quaternion.identity);
             mana-=75;
-            currentSpirits++;
+            UpdateSpirit(true);
         }
         if (spawnAction2.WasPressedThisFrame() && mana>=90)
         {
             Instantiate(waterUnit,tf.position,Quaternion.identity);
             mana-=90;
-            currentSpirits++;
+            UpdateSpirit(true);
         }
     }
     void FixedUpdate()
@@ -103,6 +103,11 @@ public class PlayerTower : MonoBehaviour, IDamageable
     void RenderMana()
     {
         textM.text = $"{Mathf.Clamp(mana,0,maxMana):F0}";
+    }
+    public void UpdateSpirit(bool n)
+    {
+        if(n) currentSpirits++;
+        else currentSpirits--;
     }
     private IEnumerator Flash()
     {   

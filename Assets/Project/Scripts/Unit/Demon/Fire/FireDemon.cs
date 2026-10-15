@@ -116,6 +116,7 @@ public class FireDemon : MonoBehaviour, IDamageable
         StartCoroutine(Flash());
         if(hp<=0){
             cd.enabled=false;
+            rb.constraints=RigidbodyConstraints2D.FreezePositionX;
             anim.Play("DF_Death");
         }
     }

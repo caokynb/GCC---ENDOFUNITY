@@ -18,6 +18,6 @@ MonoBehaviour:
   attack: 20
   defense: 5
   speed: 0.5
-  attackRange: 12
-  attackSpeed: 0.8
+  attackRange: 10
+  attackSpeed: 1.2
   manaCost: 90

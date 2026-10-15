@@ -118,12 +118,13 @@ public class WaterElemental : MonoBehaviour, IDamageable
         if(hp<=0)
         {
             cd.enabled=false;
+            rb.constraints=RigidbodyConstraints2D.FreezePositionX;
             anim.Play("EW_Death");
         }
     }
     public void Death()
     {
-        player.currentSpirits--;
+        player.UpdateSpirit(false);;
         Destroy(gameObject);
     }
     void RenderHp()
