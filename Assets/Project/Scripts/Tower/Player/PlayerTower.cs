@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,10 +18,11 @@ public class PlayerTower : MonoBehaviour, IDamageable
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private Transform tf;
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private TextMeshPro text;
-    [SerializeField] private TextMeshPro textM;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI textM;
     [SerializeField] private GameObject fireUnit;
     [SerializeField] private GameObject waterUnit;
+    [SerializeField] private GameObject groundUnit;
     private InputAction spawnAction;
     private InputAction spawnAction2;
     private InputAction spawnAction3;
@@ -59,17 +61,17 @@ public class PlayerTower : MonoBehaviour, IDamageable
         RenderMana();
         RenderHp();
         mana=Mathf.Clamp(mana,0,maxMana);
-        if (spawnAction.WasPressedThisFrame() && mana>=75)
+        if (spawnAction.WasPressedThisFrame())
         {
-            Instantiate(fireUnit,tf.position,Quaternion.identity);
-            mana-=75;
-            UpdateSpirit(true);
+            Summon(1,75);
         }
-        if (spawnAction2.WasPressedThisFrame() && mana>=90)
+        if (spawnAction2.WasPressedThisFrame())
         {
-            Instantiate(waterUnit,tf.position,Quaternion.identity);
-            mana-=90;
-            UpdateSpirit(true);
+            Summon(2,100);
+        }
+        if (spawnAction3.WasPressedThisFrame())
+        {
+            Summon(3,50);
         }
     }
     void FixedUpdate()
@@ -84,6 +86,15 @@ public class PlayerTower : MonoBehaviour, IDamageable
             }
         }
         mana+=manaRegenRate;
+    }
+    public void Summon(int n, int manaDeducted)
+    {
+        if(mana<manaDeducted) return;
+        if(n==1) Instantiate(fireUnit,tf.position,Quaternion.identity);
+        if(n==2) Instantiate(waterUnit,tf.position,Quaternion.identity);
+        if(n==3) Instantiate(groundUnit,tf.position,Quaternion.identity);
+        mana-=manaDeducted;
+        UpdateSpirit(true);
     }
     public void TakeDamage(int damage,Element e)
     {

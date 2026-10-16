@@ -48,8 +48,8 @@ public class FireDemon : MonoBehaviour, IDamageable
     {
         unitName = unitData.unitName;
         element = unitData.element;
-        hp = unitData.hp;
-        attack = unitData.attack;
+        hp = (int)(unitData.hp*1.05f);
+        attack = (int)(unitData.attack*1.05f);
         defense = unitData.defense;
         speed = unitData.speed;
         attackRange = unitData.attackRange;

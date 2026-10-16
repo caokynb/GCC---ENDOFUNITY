@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitSO
   unitName: Fire Unit
   element: 0
-  hp: 100
-  attack: 30
-  defense: 10
-  speed: 1
-  attackRange: 3
-  attackSpeed: 1
+  hp: 150
+  attack: 38
+  defense: 2
+  speed: 1.4
+  attackRange: 2.2
+  attackSpeed: 0.8
   manaCost: 75

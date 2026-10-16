@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitSO
   unitName: Water Elemental
   element: 1
-  hp: 80
-  attack: 20
-  defense: 5
-  speed: 0.5
-  attackRange: 10
-  attackSpeed: 1.2
-  manaCost: 90
+  hp: 90
+  attack: 55
+  defense: 0
+  speed: 0.6
+  attackRange: 8
+  attackSpeed: 1.5
+  manaCost: 100

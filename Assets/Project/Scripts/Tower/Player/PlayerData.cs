@@ -8,9 +8,9 @@ public class PlayerData
     public List<int> upgrades = new List<int>{0,0,0};
     public PlayerData()
     {
-        maxHp = 100;
+        maxHp = 1000;
         maxMana = 100f;
-        manaRegenRate = 0.5f;
+        manaRegenRate = 0.05f;
         spiritLimit = 3;
         upgrades = new List<int> { 0, 0, 0 };
     }
