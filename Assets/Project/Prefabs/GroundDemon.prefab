@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6468008292085433734}
   - component: {fileID: 8385050313689157524}
   - component: {fileID: -9079057925625624153}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: GroundDemon
-  m_TagString: Elemental
+  m_TagString: Demon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438cbfbbf5c74854aa90890bdee3e71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundDemon
-  player: {fileID: 2521795519430524285, guid: ec8ba6e7a60c3d547bd333332bf6fa8f, type: 3}
+  demon: {fileID: 8764441913410417299, guid: 0d1326117d9b4e74c9dcf07087a5d76f, type: 3}
   unitData: {fileID: 11400000, guid: 3f04130c0737fd54cadbefa73f1f1f6e, type: 2}
   rb: {fileID: 6468008292085433734}
   cd: {fileID: 8385050313689157524}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 3895620793728992638}
   - component: {fileID: 8425281899676824324}
   - component: {fileID: 8318611053332944164}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4279185912361893749, guid: 1b385b279ec64804cbb49db3c7f658d1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 1027768768207340575}
   - component: {fileID: 6994336711841043437}
   - component: {fileID: 1757625328983336003}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RenderHp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ RectTransform:
   m_GameObject: {fileID: 5813204356593125473}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: -0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3693274742411955519}

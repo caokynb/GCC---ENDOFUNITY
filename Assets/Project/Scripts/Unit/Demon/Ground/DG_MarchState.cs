@@ -12,7 +12,7 @@ public class DG_MarchState : IState
     }
     public void Tick()
     {
-        groundDemon.rb.linearVelocityX=groundDemon.speed;
+        groundDemon.rb.linearVelocityX=groundDemon.speed*-1;
     }
     public void FixedTick()
     {

@@ -377,3 +377,5 @@ MonoBehaviour:
   sprite: {fileID: 9199585703126660632}
   text: {fileID: 2687059031339496728}
   fireDemon: {fileID: 7756185030667106567, guid: a37e4afd618e727408d52a7cd6a3bba7, type: 3}
+  waterDemon: {fileID: 717479036676186179, guid: c2846b0fb9a581640af400d13e07d091, type: 3}
+  groundDemon: {fileID: 717479036676186179, guid: bc5b123b0c1bce24bb240d15e3cada36, type: 3}

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6468008292085433734}
   - component: {fileID: 8385050313689157524}
   - component: {fileID: 1943954224518119440}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: WaterDemon
-  m_TagString: Elemental
+  m_TagString: Demon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c60e03cab5840d4fa87bebadaed33a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDemon
-  player: {fileID: 2521795519430524285, guid: ec8ba6e7a60c3d547bd333332bf6fa8f, type: 3}
+  demon: {fileID: 8764441913410417299, guid: 0d1326117d9b4e74c9dcf07087a5d76f, type: 3}
   unitData: {fileID: 11400000, guid: da7a25deb12a85a4ab96b50dd0a8e339, type: 2}
   rb: {fileID: 6468008292085433734}
   cd: {fileID: 8385050313689157524}
@@ -297,7 +297,7 @@ RectTransform:
   m_GameObject: {fileID: 5813204356593125473}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: -0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3693274742411955519}

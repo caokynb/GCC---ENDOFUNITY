@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WaterDemon : MonoBehaviour, IDamageable
 {
-    [SerializeField] private PlayerTower player;
+    [SerializeField] public DemonTower demon;
     [SerializeField] private UnitSO unitData;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public BoxCollider2D cd;
@@ -124,7 +124,6 @@ public class WaterDemon : MonoBehaviour, IDamageable
     }
     public void Death()
     {
-        player.UpdateSpirit(false);;
         Destroy(gameObject);
     }
     void RenderHp()

@@ -12,7 +12,7 @@ public class DW_MarchState : IState
     }
     public void Tick()
     {
-        waterDemon.rb.linearVelocityX=waterDemon.speed;
+        waterDemon.rb.linearVelocityX=waterDemon.speed*-1;
     }
     public void FixedTick()
     {
