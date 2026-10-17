@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,8 +18,12 @@ public class DemonTower : MonoBehaviour, IDamageable
     [SerializeField] private Transform tf;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
-    private InputAction spawnAction;
     [SerializeField] private GameObject fireDemon;
+    [SerializeField] private GameObject waterDemon;
+    [SerializeField] private GameObject groundDemon;
+    private float timer1;
+    private float timer2;
+    private float timer3;
     void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
@@ -26,27 +31,57 @@ public class DemonTower : MonoBehaviour, IDamageable
     
     void Awake()
     {
-        spawnAction = InputSystem.actions.FindAction("Spawn_D");
         player = new PlayerData();
         GetStat();
     }
     void GetStat()
     {
         maxHp = (int)Mathf.Pow(player.maxHp,1.2f);
-        mana = player.maxMana;
+        maxMana=(int)Mathf.Pow(player.maxMana,1.2f);
+        manaRegenRate=(int)Mathf.Pow(player.manaRegenRate,1.025f);
         hp = maxHp;
         mana = maxMana;
-        spiritLimit = player.spiritLimit;
+        timer1=11f;
+        timer2=17f;
+        timer3=23f;
     }
     void Start()
     {
         RenderHp();
     }
-    void Update()
+    void FixedUpdate()
     {
-        if (spawnAction.WasPressedThisFrame())
+        mana=Mathf.Clamp(mana,0,maxMana);
+        mana+=manaRegenRate;
+        if (timer1 > 0f)
         {
-            Instantiate(fireDemon,tf.position,Quaternion.identity);
+            timer1-=Time.deltaTime;
+            if (timer1 <= 0f)
+            {
+                if(mana>=80) Instantiate(fireDemon,transform.position,Quaternion.identity);
+                timer1=11f;
+                mana-=80;
+            }
+        }
+        if (timer2 > 0f)
+        {
+            timer2-=Time.deltaTime;
+            if (timer2 <= 0f)
+            {
+                if(mana>=100) Instantiate(waterDemon,transform.position,Quaternion.identity);
+                timer1=17f;
+                mana-=100;
+            }
+        }
+        if (timer3 > 0f)
+        {
+            timer3-=Time.deltaTime;
+            if (timer3 <= 0f)
+            {
+                if(mana>=55) Instantiate(groundDemon,transform.position,Quaternion.identity);
+                timer3=23f;
+                mana-=55;
+            }
         }
     }
     public void TakeDamage(int damage, Element e)
