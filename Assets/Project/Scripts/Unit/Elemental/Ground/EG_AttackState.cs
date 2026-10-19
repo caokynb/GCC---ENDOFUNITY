@@ -25,6 +25,10 @@ public class EG_AttackState : IState
     public void Exit()
     {
         groundUnit.attacking=false;
+        if (beginAttack != null)
+        {
+            groundUnit.StopCoroutine(beginAttack);
+        }
     }
     public IEnumerator StartAttack()
     {

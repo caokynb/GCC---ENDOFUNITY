@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
@@ -23,10 +24,11 @@ public class PlayerTower : MonoBehaviour, IDamageable
     [SerializeField] private GameObject fireUnit;
     [SerializeField] private GameObject waterUnit;
     [SerializeField] private GameObject groundUnit;
+    private List<GameObject> activeSpirits;
     private InputAction spawnAction;
     private InputAction spawnAction2;
     private InputAction spawnAction3;
-    public int currentSpirits=0;
+    public int currentSpirits => activeSpirits.Count;
     private float timer;
     void OnEnable()
     {
@@ -38,6 +40,7 @@ public class PlayerTower : MonoBehaviour, IDamageable
         spawnAction = InputSystem.actions.FindAction("Spawn");
         spawnAction2 = InputSystem.actions.FindAction("Spawn2");
         spawnAction3 = InputSystem.actions.FindAction("Spawn3");
+        activeSpirits = new List<GameObject>();
         player = new PlayerData();
         GetStat();
     }
@@ -49,7 +52,6 @@ public class PlayerTower : MonoBehaviour, IDamageable
         hp = maxHp;
         mana = maxMana;
         spiritLimit = player.spiritLimit;
-        currentSpirits=0;
         timer=1f;
     }
     void Start()
@@ -60,6 +62,7 @@ public class PlayerTower : MonoBehaviour, IDamageable
     {
         RenderMana();
         RenderHp();
+        activeSpirits.RemoveAll(unit => unit==null);
         mana=Mathf.Clamp(mana,0,maxMana);
         if (spawnAction.WasPressedThisFrame())
         {
@@ -90,11 +93,15 @@ public class PlayerTower : MonoBehaviour, IDamageable
     public void Summon(int n, int manaDeducted)
     {
         if(mana<manaDeducted) return;
-        if(n==1) Instantiate(fireUnit,tf.position,Quaternion.identity);
-        if(n==2) Instantiate(waterUnit,tf.position,Quaternion.identity);
-        if(n==3) Instantiate(groundUnit,tf.position,Quaternion.identity);
+        GameObject spawnedUnit = null;
+        if(n==1) spawnedUnit = Instantiate(fireUnit,tf.position,Quaternion.identity);
+        if(n==2) spawnedUnit = Instantiate(waterUnit,tf.position,Quaternion.identity);
+        if(n==3) spawnedUnit = Instantiate(groundUnit,tf.position,Quaternion.identity);
+        if (spawnedUnit != null)
+        {
+            activeSpirits.Add(spawnedUnit);
+        }
         mana-=manaDeducted;
-        UpdateSpirit(true);
     }
     public void TakeDamage(int damage,Element e)
     {
@@ -114,11 +121,6 @@ public class PlayerTower : MonoBehaviour, IDamageable
     void RenderMana()
     {
         textM.text = $"{Mathf.Clamp(mana,0,maxMana):F0}";
-    }
-    public void UpdateSpirit(bool n)
-    {
-        if(n) currentSpirits++;
-        else currentSpirits--;
     }
     private IEnumerator Flash()
     {   

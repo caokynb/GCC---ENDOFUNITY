@@ -25,6 +25,10 @@ public class EF_AttackState : IState
     public void Exit()
     {
         fireUnit.attacking=false;
+        if (beginAttack != null)
+        {
+            fireUnit.StopCoroutine(beginAttack);
+        }
     }
     public IEnumerator StartAttack()
     {

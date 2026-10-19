@@ -25,6 +25,10 @@ public class DW_AttackState : IState
     public void Exit()
     {
         waterDemon.attacking=false;
+        if (beginAttack != null)
+        {
+            waterDemon.StopCoroutine(beginAttack);
+        }
     }
     public IEnumerator StartAttack()
     {

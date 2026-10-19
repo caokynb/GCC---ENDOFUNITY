@@ -25,6 +25,10 @@ public class DF_AttackState : IState
     public void Exit()
     {
         fireDemon.attacking=false;
+        if (beginAttack != null)
+        {
+            fireDemon.StopCoroutine(beginAttack);
+        }
     }
     public IEnumerator StartAttack()
     {

@@ -25,6 +25,10 @@ public class EW_AttackState : IState
     public void Exit()
     {
         waterUnit.attacking=false;
+        if (beginAttack != null)
+        {
+            waterUnit.StopCoroutine(beginAttack);
+        }
     }
     public IEnumerator StartAttack()
     {

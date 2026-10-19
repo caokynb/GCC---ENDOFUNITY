@@ -25,6 +25,10 @@ public class DG_AttackState : IState
     public void Exit()
     {
         groundDemon.attacking=false;
+        if (beginAttack != null)
+        {
+            groundDemon.StopCoroutine(beginAttack);
+        }
     }
     public IEnumerator StartAttack()
     {

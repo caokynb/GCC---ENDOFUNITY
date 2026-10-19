@@ -79,7 +79,7 @@ public class WaterElemental : MonoBehaviour, IDamageable
         if (touched2.collider != null)
         {
             currentTarget=touched2.collider.GetComponent<IDamageable>();
-            stateMachine.ForceSetState(attackState);
+            if(currentTarget!=null) stateMachine.ForceSetState(attackState);
         }
         else
         {
@@ -124,7 +124,6 @@ public class WaterElemental : MonoBehaviour, IDamageable
     }
     public void Death()
     {
-        player.UpdateSpirit(false);;
         Destroy(gameObject);
     }
     void RenderHp()

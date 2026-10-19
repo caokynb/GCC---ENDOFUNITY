@@ -78,7 +78,7 @@ public class FireDemon : MonoBehaviour, IDamageable
         if (touched.collider != null)
         {
             currentTarget=touched.collider.GetComponent<IDamageable>();
-            stateMachine.ForceSetState(attackState);
+            if(currentTarget!=null) stateMachine.ForceSetState(attackState);
         }
         else
         {

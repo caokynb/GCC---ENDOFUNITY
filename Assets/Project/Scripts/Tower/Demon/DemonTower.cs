@@ -14,7 +14,6 @@ public class DemonTower : MonoBehaviour, IDamageable
     [SerializeField] private float maxMana;
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int spiritLimit;
-    [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private Transform tf;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
@@ -24,10 +23,6 @@ public class DemonTower : MonoBehaviour, IDamageable
     private float timer1;
     private float timer2;
     private float timer3;
-    void OnEnable()
-    {
-        inputActions.FindActionMap("Player").Enable();
-    }
     
     void Awake()
     {
