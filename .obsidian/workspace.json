@@ -190,17 +190,18 @@
   },
   "active": "6ff371c84acda721",
   "lastOpenFiles": [
-    "Temp/obj/Assembly-CSharp/Assembly-CSharp.GeneratedMSBuildEditorConfig.editorconfig",
-    "Temp/obj/Assembly-CSharp/Assembly-CSharp.csproj.AssemblyReference.cache",
-    "Temp/obj/Assembly-CSharp",
-    "Temp/bin/Debug",
-    "Temp/obj",
-    "Temp/bin",
-    "Temp",
-    "Temp/ADB-Refreshcdbfacd94ef0a4d499b8adea2b566177",
-    "Temp/UnityTempFile-f213468f7d96a5e488eac60f16850f06",
-    "Temp/ADB-Refreshbce93a2dbf3cae7449fd9a70cfcaf4be",
-    "Temp/UnityTempFile-8216522c03f4d6b468849155ca3c2a4d",
+    "Temp/Burst/burst-aotwy46aqzb.b66",
+    "Temp/Burst/burst-aotwdvkxk9m.rc9",
+    "Temp/Burst/burst-aotvvp794cx.bve",
+    "Temp/Burst/burst-aotvt87mv96.gbl",
+    "Temp/Burst/burst-aotvob4jhob.c7z",
+    "Temp/Burst/burst-aotuirdhoyi.d20",
+    "Temp/Burst/burst-aottqd7wfc6.5qo",
+    "Temp/Burst/burst-aott9g85k3c.axf",
+    "Temp/Burst/burst-aotrotrpb3v.gtk",
+    "Temp/Burst/burst-aotque240xr.gdu",
+    "Temp/Burst/burst-aotqdhn1fe5.tqw",
+    "README.md",
     "Assets/Project/Assets/EF/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_8.png",
     "Assets/Project/Assets/EF/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_7.png",
     "Assets/Project/Assets/EF/Elementals_fire_knight_FREE_v1.1/png/fire_knight/air_atk/air_atk_6.png",
@@ -234,7 +235,6 @@
     "Library/PackageCache/com.unity.splines@e6e1d5900acc/Documentation~/select-default-tangent.md",
     "Library/PackageCache/com.unity.splines@e6e1d5900acc/Documentation~/manipulate-splines.md",
     "Library/PackageCache/com.unity.splines@e6e1d5900acc/Documentation~/link-unlink-knots.md",
-    "Library/PackageCache/com.unity.splines@e6e1d5900acc/Documentation~/knots.md",
-    "Library/PackageCache/com.unity.splines@e6e1d5900acc/Documentation~/join-knots.md"
+    "Library/PackageCache/com.unity.splines@e6e1d5900acc/Documentation~/knots.md"
   ]
 }

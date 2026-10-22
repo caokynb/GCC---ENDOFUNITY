@@ -1,609 +1,241 @@
-# GCC - ENDOFUNITY  
-A 3 week solo jam for the finale of the unity course in GCC
+# GCC - ENDOFUNITY
+A 3 week solo jam for the finale of the Unity course in GCC
+
 # I. IDEA
 ![[Pasted image 20261005223531.png|150]]![[Pasted image 20261005223648.png|113]]![[Pasted image 20261005223712.png|160]]
--   Game được lấy ý tưởng cơ chế từ game The battle cats, El Dorado và Line Rangers.
--   Các game trên đều thuộc dạng Tower Defense. Cơ chế rất đơn giản, mỗi màn chơi có 2 tháp, tháp của mình và tháp kẻ địch, mỗi bên có 1 set nhân vật có thể triệu hồi ra bằng tài nguyên tự cộng dồn. Mục tiêu là phá được tháp kẻ địch.
--   Tại sao lại làm theo thể loại này? Tại vì em chỉ thấy khá là hứng thú với thể loại này nhưng mà các game luôn có 1 vài thứ mà khiến em không ưng ý nên em sẽ làm theo cách của em vậy!
+- Game lấy cảm hứng từ cơ chế của The Battle Cats, El Dorado và Line Rangers.
+- Đây là game tower defense 2D: hai tháp ở hai đầu chiến trường triệu hồi unit bằng mana; unit tự di chuyển và chiến đấu. Người chơi thắng khi phá hủy tháp đối phương.
+- Hướng phát triển hiện tại kết hợp vòng chiến đấu theo round với lựa chọn nâng cấp sau mỗi round thắng, lấy cảm hứng từ Vampire Survivors.
+- Mục tiêu là giữ vòng chơi dễ hiểu, tập trung vào chiến đấu, triệu hồi và lựa chọn nâng cấp có tác động rõ ràng.
+
 # II. CONCEPT
 ## 1. Tổng quan game
--  **Title:** CTID (Center of Tower innovation and Defenses)
--  **Genre:** Tower Defense
--  **Art style:** Pixel
--  **One rule:** Do not overdose
--  Bối cảnh được lấy tại một thế giới tồn tại ma thuật. Nhân vật chính tên là `<TÊN TỰ ĐẶT>` trên hành trình đi một vòng quanh thế giới của mình. Nhưng thế giới này đầy rẫy quái vật và ma quỷ nên cậu đã học phép triệu hồi các tinh linh nguyên tố để giúp đỡ bản thân trong cuộc hành trình gian nan của mình.
+- **Title:** CTID (Center of Tower innovation and Defenses)
+- **Genre:** Tower Defense kết hợp run-based upgrade progression
+- **Art style:** Pixel
+- **One rule:** Do not overdose
+- **Bối cảnh:** Trong một thế giới có ma thuật, nhân vật chính triệu hồi các tinh linh nguyên tố để chiến đấu với quỷ và các thế lực đối địch trong hành trình của mình.
+
 ## 2. Thành phần trong game
-#### Nhân vật chính (Tháp)
-Chỉ số cơ bản:
--   HP
--   Mana
-#### Quỷ (Tháp đối phương)
-Chỉ số cơ bản:
--   HP
--   Mana
-#### Các tinh linh nguyên tố khác nhau
-- Số lượng tinh linh không nhiều.
-- Chỉ số cơ bản:
-	-   ELM (Element)
-	-   HP
-	-   ATK
-	-   DEF (ATK - DEF = ATK thực tế)
-	-   SPD
-	-   AR (Attack Range) (Tính theo mét)
-	-   AS (Attack Speed) (Attack/s)
-	-   Mana cost
-#### Các quái vật ma quỷ khác nhau
-- Số lượng quái vật cũng không nhiều.
-- Chỉ số cơ bản:
-	-   ELM (Element)
-	-   HP
-	-   ATK
-	-   DEF (ATK - DEF = ATK thực tế)
-	-   SPD
-	-   AR (Attack Range) (Tính theo mét)
-	-   AS (Attack Speed) (Attack/s)
-	-   Mana cost
-#### ~~Star Level~~
--   ~~Cấp sao của các tinh linh: 1 sao -\> 3 sao.~~
--   ~~Cấp sao của các quái vật ma quỷ: 1 -\> 4 sao.~~
-#### Magic Stone
--   Đá phép.
--   Là tiền tệ chính.
-## 3. Cơ chế trong game
-### 3.1. Battle Field
-Khi trong trận chiến:
--   Môi trường 2D gồm nhân vật chính đứng ở bên trái và 1 con quỷ đứng ở bên phải với khoảng cách tùy thuộc vào màn.
--   Con quỷ cũng có thể triệu hồi ra các con quái vật.
--   Nhiệm vụ của người chơi là tiêu diệt được quỷ (Tháp chính đối phương).
-Cấu trúc cơ bản:
-``` text
-Player Tower                         Demon Tower
-     │                                    │
-     │                                    │
-     ▼                                    ▼
-  Spirit ────────────────────────────► Demon
-```
-### 3.2. Player Tower
-Nhân vật chính được đại diện bởi Player Tower.
-Chỉ số hiện tại:
-``` text
-PlayerTower {
-    HP,
-    Mana,
-    ManaRegen
-}
-```
-Người chơi có thể nâng cấp một số chỉ số của Player Tower.
-### 3.3. Demon Tower
-Demon Tower là tháp đối phương.
-Chỉ số hiện tại:
-``` text
-DemonTower {
-    HP,
-    Mana,
-	ManaRegen
-}
-```
-Demon Tower có thể triệu hồi các quái vật ma quỷ trong trận chiến.
-### 3.4. Spirit
-Spirit là các tinh linh nguyên tố do người chơi triệu hồi.
-Cấu trúc:
-``` text
-Spirit {
-    Name,
-    Element,
-    HP,
-    ATK,
-    DEF,
-    SPD,
-    AttackRange,
-    AttackSpeed,
-    ManaCost,
-    Level,
-    Star
-}
-```
+### Người chơi và Player Tower
+Player Tower là căn cứ của người chơi. Các chỉ số chính:
+- HP tối đa và HP hiện tại
+- Mana tối đa, mana hiện tại và tốc độ hồi mana
 
-|  Thuộc tính  |          Mô tả          |
-|:------------:|:-----------------------:|
-|     Name     |      Tên tinh linh      |
-|    Element   |       Hệ nguyên tố      |
-|      HP      |           Máu           |
-|      ATK     |        Sát thương       |
-|      DEF     |        Phòng thủ        |
-|      SPD     |          Tốc độ         |
-| Attack Range | Tầm đánh, tính theo mét |
-| Attack Speed |   Số lần tấn công/giây  |
-|   Mana Cost  |  Mana cần để triệu hồi  |
-|     Level    |   Cấp độ của tinh linh  |
-|     Star     |  Cấp sao của tinh linh  |
-### 3.5. Demon
-Demon là các quái vật do Demon Tower triệu hồi.
-Cấu trúc:
-``` text
-Demon {
-    Name,
-    Element,
-    HP,
-    ATK,
-    DEF,
-    SPD,
-    AttackRange,
-    AttackSpeed,
-    ManaCost,
-    Star
-}
-```
+### Demon Tower
+Demon Tower là căn cứ đối phương. Các chỉ số chính:
+- HP tối đa và HP hiện tại
+- Mana tối đa, mana hiện tại và tốc độ hồi mana
 
-|  Thuộc tính  |         Mô tả        |
-|:------------:|:--------------------:|
-|     Name     |     Tên quái vật     |
-|    Element   |     Hệ nguyên tố     |
-|      HP      |          Máu         |
-|      ATK     |      Sát thương      |
-|      DEF     |       Phòng thủ      |
-|      SPD     |        Tốc độ        |
-| Attack Range |       Tầm đánh       |
-| Attack Speed | Số lần tấn công/giây |
-|   Mana Cost  |   Mana cần để spawn  |
-|     Star     |        Cấp sao       |
-### 3.6. Mana System
-Mana là tài nguyên được sử dụng để triệu hồi Spirit.
-Player có:
--   Mana hiện tại.
--   Lượng Mana tối đa.
--   Tốc độ hồi Mana.
-Mana được tự động cộng dồn theo thời gian.
-Cấu trúc:
-``` text
-Mana System {
-    CurrentMana,
-    MaxMana,
-    ManaRegen
-}
-```
-Khi người chơi triệu hồi Spirit:
-``` text
-Current Mana >= Spirit Mana Cost
-        │
-        ▼
-    Summon Spirit
-        │
-        ▼
-Current Mana -= Spirit Mana Cost
-```
-Nếu Mana không đủ thì Spirit không được triệu hồi.
-### 3.7. Spirit Summoning
-Người chơi sử dụng các nút triệu hồi trong Battle UI để đưa Spirit vào chiến trường.
-Điều kiện cơ bản:
-``` text
-Current Mana >= Mana Cost
-```
-Nếu đủ Mana:
-``` text
-Mana = Mana - Mana Cost
-Spawn Spirit
-```
-Nếu không đủ Mana:
-``` text
-Unspawnable
-```
-Đạt giới hạn số lượng Spirit active không làm nút triệu hồi bị khóa.
-Người chơi vẫn có thể triệu hồi và kích hoạt Overdose.
-### 3.8. Combat
-Spirit và Demon chiến đấu với nhau trên chiến trường.
-Các chỉ số ảnh hưởng tới combat:
--   HP
--   ATK
--   DEF
--   SPD
--   Attack Range
--   Attack Speed
--   Element
-Theo thiết kế hiện tại:
-``` text
-Effective ATK = ATK - DEF
-```
-Sau đó áp dụng modifier của hệ nguyên tố.
-Flow:
-``` text
-ATK
- │
- ▼
-ATK - Target DEF
- │
- ▼
-Element Modifier
- │
- ▼
-Final Damage
-```
-### 3.9. Element System
-Sẽ có các hệ nguyên tố:
--   Thủy
--   Hỏa
--   Mộc
-Việc combat sẽ liên quan nhiều đến việc khắc hệ với nhau.
+### Spirit và Demon
+Spirit là unit do người chơi triệu hồi; Demon là unit do Demon Tower triệu hồi. Cả hai dùng chung nhóm chỉ số chiến đấu:
+- Element
+- HP
+- Attack
+- Defense
+- Speed
+- Attack Range
+- Attack Speed
+- Mana Cost
+
+### Hướng tổ chức unit
+- Spirit và Demon dùng chung UnitBase, StateMachine và các state chung như di chuyển, tấn công, chết.
+- Mỗi unit có instance FSM riêng tại runtime để lưu state hiện tại, target và dữ liệu của chính unit đó.
+- Animator và animation clip được cấu hình theo prefab; FSM chỉ gửi các tín hiệu animation chung.
+
+## 3. Round Upgrade
+Sau mỗi round thắng, người chơi nhận ba lựa chọn được rút từ một pool nâng cấp và chọn một lựa chọn. Nâng cấp đã chọn được giữ qua các round tiếp theo trong cùng một run.
+
+Pool nâng cấp dự kiến gồm:
+- Player Tower: HP, Mana tối đa, Mana Regen
+- Spirit của người chơi: Unit HP, Unit Attack, Unit Defense, Unit Speed
+
+Mỗi lựa chọn cần ghi rõ chỉ số nào được tăng và mức tăng. Có thể loại các lựa chọn đã đạt giới hạn khỏi pool. Chi tiết số lượng cấp, mức tăng và số round sẽ được cân bằng trong quá trình phát triển.
+
+## 4. Element System
+Các hệ nguyên tố hiện có:
+- Thủy
+- Hỏa
+- Mộc
+
 Quan hệ khắc hệ:
-``` text
+```text
 Thủy > Hỏa
 Hỏa > Mộc
 Mộc > Thủy
 ```
-Nếu hệ tấn công khắc chế mục tiêu:
-``` text
-ATK × 1.10
-```
-Nếu hệ tấn công bị khắc chế:
-``` text
-ATK × 0.8
-```
-Nếu không có quan hệ khắc chế:
-``` text
-ATK × 1.0
-```
-Bảng hệ:
+
+- Tấn công khắc chế mục tiêu: sát thương nhân `1.10`.
+- Tấn công bị khắc chế: sát thương nhân `0.8`.
+- Không có quan hệ khắc chế: sát thương nhân `1.0`.
 
 | Hệ tấn công | Khắc chế | Bị khắc chế |
 |:-----------:|:--------:|:-----------:|
-|     Thủy    |    Hỏa   |     Mộc     |
-|     Hỏa     |    Mộc   |     Thủy    |
-|     Mộc     |   Thủy   |     Hỏa     |
+| Thủy | Hỏa | Mộc |
+| Hỏa | Mộc | Thủy |
+| Mộc | Thủy | Hỏa |
 
-### 3.10. Overdose System
-Overdose là cơ chế đặc trưng của game.
-Player chỉ có được một số lượng Spirit active trên chiến trường nhất định.
-Tuy nhiên, nút triệu hồi vẫn luôn có thể bấm được.
-Nếu số lượng Spirit vượt quá giới hạn:
-``` text
-Current Active Spirit > Active Spirit Limit
+## 5. Overdose System
+Overdose là cơ chế đánh đổi đặc trưng của game. Người chơi có giới hạn số Spirit hoạt động, nhưng vẫn có thể triệu hồi vượt giới hạn.
+
+Khi số Spirit đang hoạt động lớn hơn giới hạn:
+- Player Tower mất HP theo thời gian.
+- Sát thương của Spirit bị giảm theo số unit vượt giới hạn.
+
+```text
+Số Spirit vượt giới hạn = Current Spirits - Spirit Limit
 ```
-thì người chơi bị Overdose.
-#### Overdose Effect 1 - HP Drain
-Player Tower bị drain HP liên tục:
-#### Overdose Effect 2 - Spirit Stat Penalty
-Tất cả các chỉ số của Spirit bị giảm theo từng Spirit vượt quá giới hạn:
-Penalty được cộng dồn theo công thức:
-$$\text{Tower HP Drain/s} = \text{MaxHP} \cdot \sqrt[\text{currentSpirits} - \text{spiritsLimit}]{0.02}$$
-$$\text{Damage Penalty} = \text{baseDamage} \cdot 0.935^{\text{currentSpirits} - \text{spiritsLimit}}$$
-Flow:
-``` text
-Check Active Spirits
-        │
-        ▼
-Current > Limit?
-   │           │
-  No          Yes
-   │           │
-   ▼           ▼
- Normal    Calculate Excess
-               │
-        ┌──────┴──────┐
-        ▼             ▼
-    HP Drain     Stat Penalty
+
+Công thức và mức phạt cụ thể được cân bằng trong game. Quy tắc thiết kế: Overdose đem lại thêm sức mạnh chiến đấu nhưng tạo nguy cơ khiến Player Tower bị phá hủy.
+
+## 6. Combat
+Spirit và Demon tự động di chuyển, tìm mục tiêu trong tầm đánh và tấn công.
+
+Sát thương cơ bản:
+```text
+Damage = max(1, (Attack × Element Modifier) - Target Defense)
 ```
-### 3.11. Demon Spawn
-Mỗi màn thì Demon cũng có một set quái vật để spawn.
-Demon spawn theo ưu tiên:
-1.  Rẻ nhất.
-2.  Đang không trong cooldown.
-Flow:
-``` text
-Get Demon Set
-      │
-      ▼
-Filter Demon
-not in Cooldown
-      │
-      ▼
-Sort by Mana Cost
-      │
-      ▼
-Select Cheapest
-      │
-      ▼
-Spawn Demon
+
+| Chỉ số | Tác dụng |
+|:------|:---------|
+| HP | Lượng sát thương unit chịu được trước khi bị hạ |
+| Attack | Sát thương cơ bản gây ra |
+| Defense | Giảm sát thương nhận vào |
+| Speed | Tốc độ di chuyển |
+| Attack Range | Khoảng cách có thể tấn công |
+| Attack Speed | Nhịp tấn công |
+| Element | Điều chỉnh sát thương theo quan hệ khắc hệ |
+
+## 7. Mana và Summoning
+Mana được tự động hồi theo thời gian và dùng để triệu hồi unit.
+
+Điều kiện triệu hồi:
+```text
+Current Mana >= Unit Mana Cost
 ```
-### 3.12. Win / Lose
-#### Win
-Người chơi chiến thắng khi phá được "Tháp" đối phương.
-``` text
-Demon Tower HP <= 0
+
+Khi triệu hồi thành công, mana bị trừ theo Mana Cost của unit. Nếu mana không đủ, unit không được triệu hồi. Vượt giới hạn Spirit hoạt động vẫn có thể triệu hồi và kích hoạt Overdose.
+
+## 8. Demon Spawn
+Demon Tower tự triệu hồi các Demon thuộc danh sách của round. Chỉ Demon đang đủ điều kiện và không trong cooldown mới được chọn. Ưu tiên Demon có Mana Cost thấp nhất trong số các lựa chọn hợp lệ.
+
+```text
+Lấy danh sách Demon của round
+→ Lọc Demon đủ điều kiện và hết cooldown
+→ Chọn Demon có Mana Cost thấp nhất
+→ Trừ mana và triệu hồi
 ```
-Sau khi qua màn:
--   Được thưởng đá phép.
--   Người chơi nhận kinh nghiệm.
--   Các tinh linh nhận kinh nghiệm.
-#### Lose
-Người chơi thua khi:
-``` text
-Player Tower HP <= 0
-```
-### 3.13. In Game Loop
-``` text
-Start Level
-    │
-    ▼
-Initialize Player Tower
-Initialize Demon Tower
-    │
-    ▼
-Start Mana Generation
-    │
-    ▼
-┌───────────────────────┐
-│      Battle Loop      │
-│                       │
-│  Generate Mana        │
-│       ↓               │
-│  Player Summons       │
-│       ↓               │
-│  Demon Spawns         │
-│       ↓               │
-│  Units Move           │
-│       ↓               │
-│  Units Attack         │
-│       ↓               │
-│  Check Overdose       │
-│       ↓               │
-│  Check Tower HP       │
-└───────────┬───────────┘
-            │
-       ┌────┴────┐
-       ▼         ▼
- Player HP    Demon HP
-   <= 0         <= 0
-       │         │
-       ▼         ▼
-     Lose       Win
-```
-## ~~4. Progression~~
-### ~~4.1. Spirit Level~~
-~~Tinh linh tham gia các trận chiến và hoàn thành sẽ được tăng EXP và sẽ~~
-~~tăng level.~~
-~~Flow:~~
-``` text
-Battle Completed
-       │
-       ▼
-Spirit EXP Reward
-       │
-       ▼
-EXP >= Required EXP?
-       │
-       ├── No → Keep Current Level
-       │
-       └── Yes
-             │
-             ▼
-        Spirit Level Up
-```
-### ~~4.2. Spirit Star~~
-~~Tinh linh max level sẽ có thể được tăng cấp sao bằng lượng lớn đá phép.~~
-~~Spirit có:~~
-``` text
-1 Star → 2 Star → 3 Star
-```
-~~Điều kiện:~~
-``` text
-Spirit Max Level
-       +
-Required Magic Stones
-       │
-       ▼
-    Star Up
-```
-### ~~4.3. Player Upgrade~~
-~~Các chỉ số có thể nâng cấp:~~
--   ~~Lượng Mana.~~
--   ~~Tốc độ hồi Mana.~~
--   ~~HP.~~
--   ~~Power - TẠM THỜI KHÔNG THÊM VÀO.~~
-~~Cấu trúc:~~
-``` text
-PlayerUpgrade {
-    MaxMana,
-    ManaRegen,
-    HP,
-    // Power
-}
-```
-### ~~4.4. Player Progression~~
-~~Progression chính:~~
-``` text
-Qua màn
-   ↓
-Nhận EXP + Magic Stone
-   ↓
-Nâng cấp Spirit
-   ↓
-Nâng cấp nhân vật
-   ↓
-Đánh màn tiếp theo
-   ↓
-Phá đảo
-```
-# III. LEVELS
-## 1. Level Structure
-Mỗi level bao gồm:
-``` text
-Level {
-    PlayerTower,
-    DemonTower,
-    TowerDistance,
-    DemonSet[],
-    Reward
+
+# III. ROUND STRUCTURE AND DIFFICULTY
+## 1. Round Structure
+Mỗi round là một trận chiến hoàn chỉnh, gồm:
+```text
+Round {
+    Player Tower,
+    Demon Tower,
+    Tower Distance,
+    Demon Set,
+    Enemy Scaling
 }
 ```
 
-|    Property    |         Description        |
-|:--------------:|:--------------------------:|
-|  Player Tower  |      Căn cứ người chơi     |
-|   Demon Tower  |      Căn cứ đối phương     |
-| Tower Distance | Khoảng cách giữa hai Tower |
-|    Demon Set   |  Danh sách Demon của level |
-|     Reward     |    Phần thưởng khi thắng   |
-## 2. Demon Configuration
-Mỗi màn có một set Demon riêng.
-``` text
-Level 01
- └── Demon Set
-      ├── Demon A
-      ├── Demon B
-      └── Demon C
+- **Player Tower:** Căn cứ của người chơi.
+- **Demon Tower:** Căn cứ đối phương.
+- **Tower Distance:** Khoảng cách giữa hai tháp.
+- **Demon Set:** Danh sách Demon có thể được triệu hồi trong round.
+- **Enemy Scaling:** Hệ số điều chỉnh độ khó theo round.
+
+## 2. Round Progression
+Các round được chơi nối tiếp trong cùng một run:
+```text
+Round 1 → Round 2 → Round 3 → ...
 ```
-Demon được lựa chọn theo:
-``` text
-Not in Cooldown
-        ↓
-Cheapest Mana Cost
-        ↓
-Spawn
-```
-## 3. Level Progression
-``` text
-Level 1
-  ↓
-Level 2
-  ↓
-Level 3
-  ↓
-...
-  ↓
-Final Level
-```
-Số lượng level cụ thể: `[To Be Determined]`.
+
+Số round và điều kiện kết thúc run: `[To Be Determined]`.
+
+## 3. Enemy Scaling
+Độ khó của Demon và Demon Tower tăng theo round. Các chỉ số có thể scale gồm HP, Attack, Defense, Mana hoặc tần suất triệu hồi.
+
+Scaling được áp dụng lên chỉ số runtime khi bắt đầu round; dữ liệu gốc của unit không bị thay đổi. Mức tăng cụ thể cần được cân bằng để độ khó tăng đều và người chơi có thể ứng phó bằng các lựa chọn nâng cấp.
+
 # IV. GAME FLOW
-``` text
-                    START
-                      │
-                      ▼
-                 Main Menu
-                      │
-          ┌───────────┼───────────┐
-          ▼           ▼           ▼
-      New Game     Continue     Settings
-          │           │
-          ▼           ▼
-      Character      Load Save
-        Name           │
-          └──────┬─────┘
-                 ▼
-             Game Menu
-                 │
-          ┌──────┴──────┐
-          ▼             ▼
-         Map         Loadout
-          │             │
-          └──────┬──────┘
-                 ▼
-             Select Level
-                 │
-                 ▼
-            Start Battle
-                 │
-                 ▼
-          Generate Mana
-                 │
-                 ▼
-         Summon / Spawn
-                 │
-                 ▼
-               Combat
-                 │
-          ┌──────┴───────┐
-          ▼              ▼
-   Enemy Tower HP    Player Tower HP
-       <= 0              <= 0
-          │                 │
-          ▼                 ▼
-        Victory            Defeat
-          │
-          ▼
-     Receive Rewards
-          │
-     ┌────┴────┐
-     ▼         ▼
- Player EXP  Spirit EXP
-     │         │
-     └────┬────┘
-          ▼
-    Upgrade / Progress
-          │
-          ▼
-      Next Level
+```text
+START
+  ↓
+Main Menu
+  ↓
+Start Run
+  ↓
+Initialize Round
+  ├─ Initialize Player Tower and current run upgrades
+  ├─ Initialize Demon Tower and round scaling
+  └─ Load Demon Set
+  ↓
+Battle
+  ├─ Generate Mana
+  ├─ Player Summons Spirit
+  ├─ Demon Tower Spawns Demon
+  ├─ Units Move and Fight
+  ├─ Check Overdose
+  └─ Check Tower HP
+       ├─ Player Tower HP <= 0 → Defeat / End Run
+       └─ Demon Tower HP <= 0 → Round Victory
+                                  ↓
+                        Show 3 Upgrade Choices
+                                  ↓
+                          Choose 1 Upgrade
+                                  ↓
+                           Start Next Round
 ```
-# V. SAVE DATA
-Game hiện tại sử dụng **1 file save**.
-Cấu trúc dự kiến:
-``` text
-PlayerData {
-    PlayerName,
-    CurrentLevel,
-    MagicStone,
-    PlayerUpgrades[],
-    SpiritData[]
+
+# V. RUN DATA
+Run data cần được giữ giữa các round để các nâng cấp đã chọn tiếp tục có hiệu lực.
+
+Dữ liệu tối thiểu trong một run:
+```text
+RunData {
+    CurrentRound,
+    SelectedUpgrades,
+    PlayerTowerStats
 }
 ```
-Trong đó:
 
-|      Data      |        Description       |
-|:--------------:|:------------------------:|
-|   PlayerName   |       Tên nhân vật       |
-|  CurrentLevel  |       Màn hiện tại       |
-|   MagicStone   |     Số lượng đá phép     |
-| PlayerUpgrades |    Các nâng cấp Player   |
-|   SpiritData   | Level và Star của Spirit |
+Cách lưu run khi thoát game và hệ thống Continue: `[To Be Determined]`.
 
-Các chi tiết Save System: `...`.
-# IX. DEVELOPMENT SCOPE
-## 1. MVP
-### Core Gameplay
--   Player Tower
--   Demon Tower
--   Spirit
--   Demon
--   Mana
--   Summoning
--   Movement
--   Combat
--   Damage
--   Element
--   Overdose
--   Win / Lose
-### Progression
--   Spirit EXP
--   Spirit Level
--   Spirit Star
--   Magic Stone
--   Player Upgrade
-### UI
--   Main Menu
--   Map
--   Loadout
--   Battle UI
--   Pause Menu
-# X. CORE SYSTEM SUMMARY
-Project tập trung vào 4 hệ thống chính:
-### 1. Summon
-Dùng Mana để triệu hồi Spirit.
+# VI. DEVELOPMENT SCOPE
+## 1. Core Gameplay
+- Player Tower và Demon Tower
+- Spirit và Demon
+- Mana và hồi mana
+- Triệu hồi Spirit và tự động spawn Demon
+- Di chuyển, tìm mục tiêu và chiến đấu
+- Damage, Defense và Element
+- Overdose
+- Điều kiện thắng/thua round
+
+## 2. Round Progression
+- Khởi tạo round và danh sách Demon tương ứng
+- Tăng độ khó enemy theo round
+- Hiển thị ba lựa chọn nâng cấp sau khi thắng
+- Chọn một nâng cấp và giữ hiệu lực qua các round trong run
+- Kết thúc run khi người chơi thua hoặc hoàn thành round cuối
+
+## 3. UI
+- Main Menu
+- Battle UI: HP, mana, nút triệu hồi và thông tin cần thiết trong trận
+- Upgrade Selection sau round thắng
+- Kết quả thắng/thua
+- Pause Menu
+
+# VII. CORE SYSTEM SUMMARY
+Game tập trung vào bốn hệ thống:
+### 1. Summoning
+Người chơi dùng mana để triệu hồi Spirit; Demon Tower tự triệu hồi Demon.
 ### 2. Combat
-Spirit và Demon tự động chiến đấu, với Element tạo lợi thế hoặc bất lợi.
+Unit tự di chuyển và chiến đấu. Element tạo lợi thế hoặc bất lợi về sát thương.
 ### 3. Overdose
-Người chơi có thể vượt giới hạn Spirit để tạo áp lực chiến đấu lớn hơn,
-nhưng phải đánh đổi bằng HP của Player Tower và hiệu suất của Spirit.
-### 4. Progression
-``` text
-Win Level
-    ↓
-EXP + Magic Stone
-    ↓
-Upgrade Spirit / Player
-    ↓
-Next Level
-    ↓
-Win Again
-    ↓
-Complete Game
-```
-1 Rule: DO NOT OVERDOSE.**
+Người chơi có thể vượt giới hạn Spirit để tăng quân số, đổi lại Player Tower mất HP và Spirit bị giảm sát thương.
+### 4. Round Upgrades
+Sau mỗi round thắng, người chơi chọn một trong ba nâng cấp để định hình sức mạnh cho các round tiếp theo.
+
+**One rule: DO NOT OVERDOSE.**

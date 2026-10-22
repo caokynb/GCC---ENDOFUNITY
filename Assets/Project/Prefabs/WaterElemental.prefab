@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3693274742411955519}
   - component: {fileID: 6468008292085433734}
   - component: {fileID: 8385050313689157524}
-  - component: {fileID: 6464827895514798966}
+  - component: {fileID: 6156158133159000373}
   m_Layer: 6
   m_Name: WaterElemental
   m_TagString: Elemental
@@ -109,7 +109,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.693, y: 1.348}
   m_EdgeRadius: 0
---- !u!114 &6464827895514798966
+--- !u!114 &6156158133159000373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,19 +118,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 717479036676186179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa4229627571a404481bdd549d261f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 48837bd3dd407944299d1da52c17a32f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WaterElemental
-  player: {fileID: 2521795519430524285, guid: ec8ba6e7a60c3d547bd333332bf6fa8f, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::UnitBase
   unitData: {fileID: 11400000, guid: da7a25deb12a85a4ab96b50dd0a8e339, type: 2}
   rb: {fileID: 6468008292085433734}
   cd: {fileID: 8385050313689157524}
   sprite: {fileID: 3895620793728992638}
   text: {fileID: 1757625328983336003}
   anim: {fileID: 8425281899676824324}
-  layer:
-    serializedVersion: 2
-    m_Bits: 128
   unitName: 
   element: 0
   hp: 0
@@ -152,7 +148,7 @@ GameObject:
   - component: {fileID: 4475294153854620718}
   - component: {fileID: 3895620793728992638}
   - component: {fileID: 8425281899676824324}
-  - component: {fileID: 7435416895832367649}
+  - component: {fileID: 1819962163790660662}
   m_Layer: 6
   m_Name: Render
   m_TagString: Untagged
@@ -257,7 +253,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7435416895832367649
+--- !u!114 &1819962163790660662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,10 +262,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5076184397702465893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d095e85739c7f646b28ecbaef97ce1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f4b048eef9c7e04ebde5478fa806352, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EW_EventManager
-  waterUnit: {fileID: 6464827895514798966}
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventChecker
 --- !u!1 &5813204356593125473
 GameObject:
   m_ObjectHideFlags: 0

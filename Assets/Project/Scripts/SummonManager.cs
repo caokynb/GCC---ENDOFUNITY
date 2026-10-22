@@ -2,17 +2,29 @@ using UnityEngine;
 
 public class SummonManager : MonoBehaviour
 {
+    public static SummonManager Instance { get; private set; }
     [SerializeField] private PlayerTower player;
-    public void Summon1()
+    private void Awake()
     {
-        player.Summon(1,75);
+        Instance = this;
     }
-    public void Summon2()
+    public void Slot1()
     {
-        player.Summon(2,100);
+        Summon(player, player.SummonInit(1));
     }
-    public void Summon3()
+    public void Slot2()
     {
-        player.Summon(3,50);
+        Summon(player, player.SummonInit(2));
+    }
+    public void Slot3()
+    {
+        Summon(player, player.SummonInit(3));
+    }
+    public bool Summon(TowerBase owner, UnitBase unit)
+    {
+        if (!owner.SpendMana(unit.Data.manaCost)) return false;
+        UnitBase spawnedUnit = Instantiate(unit, owner.SpawnPosition, Quaternion.identity);
+        owner.AddUnit(spawnedUnit);
+        return true;
     }
 }

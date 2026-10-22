@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8734544639081524417}
   - component: {fileID: 7899607196416854501}
   - component: {fileID: 616142676902397035}
-  - component: {fileID: 2195538380732936971}
+  - component: {fileID: 6779596809548720639}
   m_Layer: 7
   m_Name: Render
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2195538380732936971
+--- !u!114 &6779596809548720639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,10 +125,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2946014732635891339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2770eeb5066abe49ac745030bdf919b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f4b048eef9c7e04ebde5478fa806352, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DF_EventManager
-  fireDemon: {fileID: 4340448181709799989}
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventChecker
 --- !u!1 &7135642013709884539
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +320,7 @@ GameObject:
   - component: {fileID: 3072019665080321459}
   - component: {fileID: 539640882735785007}
   - component: {fileID: 3146557475748304001}
-  - component: {fileID: 4340448181709799989}
+  - component: {fileID: 8892922102982879604}
   m_Layer: 7
   m_Name: FireDemon
   m_TagString: Demon
@@ -419,7 +418,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.693, y: 1.348}
   m_EdgeRadius: 0
---- !u!114 &4340448181709799989
+--- !u!114 &8892922102982879604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -428,18 +427,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7756185030667106567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8389333857e5df4f8155405af5633ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 48837bd3dd407944299d1da52c17a32f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireDemon
-  demon: {fileID: 8764441913410417299, guid: 0d1326117d9b4e74c9dcf07087a5d76f, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::UnitBase
   unitData: {fileID: 11400000, guid: 194233c122900954188a3e0408ffea6d, type: 2}
   rb: {fileID: 539640882735785007}
   cd: {fileID: 3146557475748304001}
   sprite: {fileID: 7899607196416854501}
   text: {fileID: 2973147684441428844}
-  layer:
-    serializedVersion: 2
-    m_Bits: 64
   anim: {fileID: 616142676902397035}
   unitName: 
   element: 0

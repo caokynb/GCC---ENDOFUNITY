@@ -184,13 +184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96ea8abd3a7899409248b77d1af47d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTower
+  towerData: {fileID: 11400000, guid: 5b6bbd26149e7124d9440b119f8c2b5c, type: 2}
   maxHp: 0
   hp: 0
   mana: 0
   maxMana: 0
   manaRegenRate: 0
   spiritLimit: 0
-  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   tf: {fileID: 2428125361702237112}
   sprite: {fileID: 3098076006935409791}
   text: {fileID: 0}
@@ -198,4 +198,3 @@ MonoBehaviour:
   fireUnit: {fileID: 717479036676186179, guid: fb4a0f588dd4f8a40a153629e146a179, type: 3}
   waterUnit: {fileID: 717479036676186179, guid: 96f460a056e04644bb26386c24e2c80a, type: 3}
   groundUnit: {fileID: 717479036676186179, guid: 4626175f991bb5f4ca6ae014fbf0e6e9, type: 3}
-  currentSpirits: 0

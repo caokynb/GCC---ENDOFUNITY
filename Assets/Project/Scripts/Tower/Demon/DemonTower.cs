@@ -1,103 +1,43 @@
-using System;
-using System.Collections;
-using System.Threading;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class DemonTower : MonoBehaviour, IDamageable
+public class DemonTower : TowerBase
 {
-    private PlayerData player;
-    [SerializeField] private int maxHp;
-    [SerializeField] private int hp;
-    [SerializeField] private float mana;
-    [SerializeField] private float maxMana;
-    [SerializeField] private float manaRegenRate;
-    [SerializeField] private int spiritLimit;
-    [SerializeField] private Transform tf;
-    [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private TextMeshPro text;
+    [SerializeField] private TowerSO demonData;
     [SerializeField] private GameObject fireDemon;
     [SerializeField] private GameObject waterDemon;
     [SerializeField] private GameObject groundDemon;
     private float timer1;
     private float timer2;
     private float timer3;
-    
+
     void Awake()
     {
-        player = new PlayerData();
-        GetStat();
+        GetStat(demonData);
+        timer1 = 10f;
+        timer2 = 20f;
+        timer3 = 30f;
     }
-    void GetStat()
-    {
-        maxHp = (int)Mathf.Pow(player.maxHp,1.2f);
-        maxMana=(int)Mathf.Pow(player.maxMana,1.2f);
-        manaRegenRate=(int)Mathf.Pow(player.manaRegenRate,1.025f);
-        hp = maxHp;
-        mana = maxMana;
-        timer1=11f;
-        timer2=17f;
-        timer3=23f;
-    }
-    void Start()
-    {
-        RenderHp();
-    }
+
     void FixedUpdate()
     {
-        mana=Mathf.Clamp(mana,0,maxMana);
-        mana+=manaRegenRate;
-        if (timer1 > 0f)
-        {
-            timer1-=Time.deltaTime;
-            if (timer1 <= 0f)
-            {
-                if(mana>=80) Instantiate(fireDemon,transform.position,Quaternion.identity);
-                timer1=11f;
-                mana-=80;
-            }
-        }
-        if (timer2 > 0f)
-        {
-            timer2-=Time.deltaTime;
-            if (timer2 <= 0f)
-            {
-                if(mana>=100) Instantiate(waterDemon,transform.position,Quaternion.identity);
-                timer1=17f;
-                mana-=100;
-            }
-        }
-        if (timer3 > 0f)
-        {
-            timer3-=Time.deltaTime;
-            if (timer3 <= 0f)
-            {
-                if(mana>=55) Instantiate(groundDemon,transform.position,Quaternion.identity);
-                timer3=23f;
-                mana-=55;
-            }
-        }
-    }
-    public void TakeDamage(int damage, Element e)
-    {
-        hp-=damage;
+        RegenMana();
         RenderHp();
-        StartCoroutine(Flash());
-        if(hp<=0) Death();
+
+        TrySpawn(ref timer1, fireDemon, 11f);
+        TrySpawn(ref timer2, waterDemon, 17f);
+        TrySpawn(ref timer3, groundDemon, 23f);
     }
-    void Death()
+
+    private void TrySpawn(ref float timer, GameObject prefab, float cooldown)
     {
-        Time.timeScale=0;
-    }
-    void RenderHp()
-    {
-        text.text=$"{Mathf.Clamp(hp,0,int.MaxValue)}";
-    }
-    private IEnumerator Flash()
-    {   
-        sprite.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        sprite.color = Color.white;
+        if (timer > 0f)
+            timer -= Time.fixedDeltaTime;
+
+        if (timer > 0f || prefab == null || SummonManager.Instance == null)
+            return;
+
+        UnitBase unitPrefab = prefab.GetComponent<UnitBase>();
+        if (unitPrefab != null && SummonManager.Instance.Summon(this, unitPrefab))
+            timer = cooldown;
     }
 }

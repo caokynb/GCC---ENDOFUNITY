@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitSO : ScriptableObject
 {
     public string unitName;
+    public UnitType unitType;
     public Element element;
     public int hp;
     public int attack;
@@ -13,6 +14,11 @@ public class UnitSO : ScriptableObject
     public float attackRange;
     public float attackSpeed;
     public int manaCost;
+}
+public enum UnitType
+{
+    Elemental = 0,
+    Demon = 1
 }
 public enum Element
 {
