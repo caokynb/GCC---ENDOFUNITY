@@ -41,9 +41,10 @@ public abstract class TowerBase : MonoBehaviour, IDamageable
         RenderHp();
     }
 
-    public bool SpendMana(float amount)
+    public bool SpendMana(float deductedMana)
     {
-        mana -= amount;
+        if(deductedMana<0f || mana<deductedMana) return false;
+        mana -= deductedMana;
         RenderMana();
         return true;
     }

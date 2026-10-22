@@ -28,16 +28,12 @@ public class DemonTower : TowerBase
         TrySpawn(ref timer3, groundDemon, 23f);
     }
 
-    private void TrySpawn(ref float timer, GameObject prefab, float cooldown)
+    private void TrySpawn(ref float timer, GameObject demon, float cooldown)
     {
-        if (timer > 0f)
-            timer -= Time.fixedDeltaTime;
-
-        if (timer > 0f || prefab == null || SummonManager.Instance == null)
-            return;
-
-        UnitBase unitPrefab = prefab.GetComponent<UnitBase>();
-        if (unitPrefab != null && SummonManager.Instance.Summon(this, unitPrefab))
+        if (timer>0f) timer-=Time.fixedDeltaTime;
+        if (timer>0f || demon==null) return;
+        UnitBase demonPrefab = demon.GetComponent<UnitBase>();
+        if (demonPrefab != null && SummonManager.Instance.Summon(this, demonPrefab))
             timer = cooldown;
     }
 }

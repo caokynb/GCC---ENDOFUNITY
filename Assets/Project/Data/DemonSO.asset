@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerSO
   maxHp: 500
   maxMana: 50
-  manaRegenRate: 0.1
+  manaRegenRate: 1.5
   spiritLimit: 1000000
