@@ -7,4 +7,8 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene("Combat");
     }
+    public void Return()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
