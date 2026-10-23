@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48837bd3dd407944299d1da52c17a32f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitBase
-  unitData: {fileID: 11400000, guid: da7a25deb12a85a4ab96b50dd0a8e339, type: 2}
+  unitData: {fileID: 11400000, guid: 85b384a618884ff4a832dcae88077b70, type: 2}
   rb: {fileID: 6468008292085433734}
   cd: {fileID: 8385050313689157524}
   sprite: {fileID: 3895620793728992638}

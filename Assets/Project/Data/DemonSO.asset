@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4b39139ae0ea54a91da4d7a6ffb680, type: 3}
   m_Name: DemonSO
   m_EditorClassIdentifier: Assembly-CSharp::TowerSO
-  maxHp: 500
-  maxMana: 50
+  maxHp: 800
+  maxMana: 70
   manaRegenRate: 1.5
   spiritLimit: 1000000

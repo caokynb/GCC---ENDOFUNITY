@@ -10,6 +10,7 @@ public class UnitVisual : MonoBehaviour
         sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         sprite.color = org;
+        yield return null;
     }
     public static void RenderHp(TextMeshPro text,int hp)
     {

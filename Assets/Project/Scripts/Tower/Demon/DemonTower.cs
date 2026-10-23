@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DemonTower : TowerBase
@@ -6,6 +7,7 @@ public class DemonTower : TowerBase
     [SerializeField] private GameObject fireDemon;
     [SerializeField] private GameObject waterDemon;
     [SerializeField] private GameObject groundDemon;
+    public Action roundCheck;
     private float timer1;
     private float timer2;
     private float timer3;
@@ -13,9 +15,15 @@ public class DemonTower : TowerBase
     void Awake()
     {
         GetStat(demonData);
-        timer1 = 10f;
-        timer2 = 20f;
-        timer3 = 30f;
+        GetTimer(1);
+        GetTimer(2);
+        GetTimer(3);
+    }
+    void GetTimer(int n)
+    {
+        if(n==1) timer1 = UpgradeManager.GetTimerDemon(10f,RoundManager.round);
+        if(n==2) timer2 = UpgradeManager.GetTimerDemon(20f,RoundManager.round);
+        if(n==3) timer3 = UpgradeManager.GetTimerDemon(30f,RoundManager.round);
     }
 
     void FixedUpdate()
@@ -23,17 +31,20 @@ public class DemonTower : TowerBase
         RegenMana();
         RenderHp();
 
-        TrySpawn(ref timer1, fireDemon, 11f);
-        TrySpawn(ref timer2, waterDemon, 17f);
-        TrySpawn(ref timer3, groundDemon, 23f);
+        TrySpawn(ref timer1,fireDemon,1);
+        TrySpawn(ref timer2,waterDemon,2);
+        TrySpawn(ref timer3,groundDemon,3);
+    }
+    protected override void OnTowerDestroyed()
+    {
+        roundCheck?.Invoke();
     }
 
-    private void TrySpawn(ref float timer, GameObject demon, float cooldown)
+    private void TrySpawn(ref float timer,GameObject demon,int n)
     {
         if (timer>0f) timer-=Time.fixedDeltaTime;
         if (timer>0f || demon==null) return;
         UnitBase demonPrefab = demon.GetComponent<UnitBase>();
-        if (demonPrefab != null && SummonManager.Instance.Summon(this, demonPrefab))
-            timer = cooldown;
+        if (demonPrefab != null && SummonManager.Instance.Summon(this, demonPrefab)) GetTimer(n);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerTower : TowerBase
@@ -6,6 +7,7 @@ public class PlayerTower : TowerBase
     [SerializeField] private GameObject fireUnit;
     [SerializeField] private GameObject waterUnit;
     [SerializeField] private GameObject groundUnit;
+    public Action roundCheck;
     private float timer;
     void Awake()
     {
@@ -31,11 +33,17 @@ public class PlayerTower : TowerBase
         }
         RegenMana();
     }
+
     public void Summon(int n)
     {
         UnitBase unit = SummonInit(n);
         if (unit != null && SummonManager.Instance != null)
             SummonManager.Instance.Summon(this, unit);
+    }
+
+    protected override void OnTowerDestroyed()
+    {
+        roundCheck?.Invoke();
     }
 
     public UnitBase SummonInit(int slot)

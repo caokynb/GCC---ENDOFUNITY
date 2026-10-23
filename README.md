@@ -44,13 +44,15 @@ Spirit là unit do người chơi triệu hồi; Demon là unit do Demon Tower t
 - Animator và animation clip được cấu hình theo prefab; FSM chỉ gửi các tín hiệu animation chung.
 
 ## 3. Round Upgrade
-Sau mỗi round thắng, người chơi nhận ba lựa chọn được rút từ một pool nâng cấp và chọn một lựa chọn. Nâng cấp đã chọn được giữ qua các round tiếp theo trong cùng một run.
+Sau mỗi round thắng, người chơi chọn một trong sáu nâng cấp cố định. Các lựa chọn không được rút ngẫu nhiên từ pool:
+- **Unit Damage:** tăng Attack của tất cả Spirit người chơi thêm 2% chỉ số gốc.
+- **Unit Movement Speed:** tăng Speed của tất cả Spirit người chơi thêm 2% chỉ số gốc.
+- **Unit HP:** tăng HP của tất cả Spirit người chơi thêm 2% chỉ số gốc.
+- **Unit Defense:** tăng Defense của tất cả Spirit người chơi thêm 2% chỉ số gốc.
+- **Player Tower Max Mana:** tăng Mana tối đa của Player Tower thêm 2% chỉ số gốc.
+- **Player Tower Mana Regen:** tăng tốc độ hồi Mana của Player Tower thêm 2% chỉ số gốc.
 
-Pool nâng cấp dự kiến gồm:
-- Player Tower: HP, Mana tối đa, Mana Regen
-- Spirit của người chơi: Unit HP, Unit Attack, Unit Defense, Unit Speed
-
-Mỗi lựa chọn cần ghi rõ chỉ số nào được tăng và mức tăng. Có thể loại các lựa chọn đã đạt giới hạn khỏi pool. Chi tiết số lượng cấp, mức tăng và số round sẽ được cân bằng trong quá trình phát triển.
+Mỗi lần chọn cùng một nâng cấp sẽ cộng thêm 2% chỉ số gốc tương ứng. Nâng cấp đã chọn được giữ và cộng dồn trong các round tiếp theo của cùng một run. Nâng cấp chỉ số unit áp dụng cho Spirit đang hoạt động và Spirit được triệu hồi sau đó. Các nâng cấp unit không áp dụng cho Demon; Demon và Demon Tower tăng chỉ số theo Enemy Scaling.
 
 ## 4. Element System
 Các hệ nguyên tố hiện có:
@@ -181,7 +183,7 @@ Battle
        ├─ Player Tower HP <= 0 → Defeat / End Run
        └─ Demon Tower HP <= 0 → Round Victory
                                   ↓
-                        Show 3 Upgrade Choices
+                        Show 6 Fixed Upgrade Choices
                                   ↓
                           Choose 1 Upgrade
                                   ↓
@@ -216,8 +218,9 @@ Cách lưu run khi thoát game và hệ thống Continue: `[To Be Determined]`.
 ## 2. Round Progression
 - Khởi tạo round và danh sách Demon tương ứng
 - Tăng độ khó enemy theo round
-- Hiển thị ba lựa chọn nâng cấp sau khi thắng
+- Hiển thị sáu lựa chọn nâng cấp cố định sau khi thắng
 - Chọn một nâng cấp và giữ hiệu lực qua các round trong run
+- Áp dụng nâng cấp đã chọn cho Spirit đang hoạt động và Spirit được triệu hồi về sau
 - Kết thúc run khi người chơi thua hoặc hoàn thành round cuối
 
 ## 3. UI
@@ -236,6 +239,6 @@ Unit tự di chuyển và chiến đấu. Element tạo lợi thế hoặc bất
 ### 3. Overdose
 Người chơi có thể vượt giới hạn Spirit để tăng quân số, đổi lại Player Tower mất HP và Spirit bị giảm sát thương.
 ### 4. Round Upgrades
-Sau mỗi round thắng, người chơi chọn một trong ba nâng cấp để định hình sức mạnh cho các round tiếp theo.
+Sau mỗi round thắng, người chơi chọn một trong sáu nâng cấp cố định: Spirit Damage, Movement Speed, HP, Defense, Player Tower Max Mana hoặc Player Tower Mana Regen. Mỗi lần chọn tăng thêm 2% chỉ số gốc tương ứng; nâng cấp cộng dồn trong run.
 
 **One rule: DO NOT OVERDOSE.**

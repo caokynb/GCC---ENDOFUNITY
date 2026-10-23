@@ -10,7 +10,8 @@ public class UnitBase : MonoBehaviour, IDamageable
     [SerializeField] public SpriteRenderer sprite;
     [SerializeField] private TextMeshPro text;
     [SerializeField] public Animator anim;
-    private LayerMask layer;
+    private LayerMask targetLayer;
+    private bool isElemental;
     public StateMachine stateMachine {get; private set;}
     public MarchState marchState {get; private set;}
     public AttackState attackState {get; private set;}
@@ -26,26 +27,35 @@ public class UnitBase : MonoBehaviour, IDamageable
     public int manaCost;
     public bool attacking;
     private float outTimer;
-
     public UnitSO Data => unitData;
 
     void Awake()
     {
-        if(gameObject.layer==LayerMask.NameToLayer("Elemental")) layer=LayerMask.GetMask("Demon");
-        else layer=LayerMask.GetMask("Elemental");
         stateMachine = new StateMachine();
         marchState = new MarchState(this);
         attackState = new AttackState(this);
+        isElemental=gameObject.layer==LayerMask.NameToLayer("Elemental");
+        if(isElemental) targetLayer=LayerMask.GetMask("Demon");
+        else targetLayer=LayerMask.GetMask("Elemental");
         GetStat();
     }
     void GetStat()
     {
         unitName = unitData.unitName;
         element = unitData.element;
-        hp = unitData.hp;
-        attack = unitData.attack;
-        defense = unitData.defense;
-        speed = unitData.speed;
+        if(isElemental){
+            hp = UpgradeManager.GetUpgradesINT(unitData.hp,0);
+            attack = UpgradeManager.GetUpgradesINT(unitData.attack,1);
+            defense = UpgradeManager.GetUpgradesINT(unitData.defense,2) ;
+            speed = UpgradeManager.GetUpgradesFLOAT(unitData.speed,3);
+        } 
+        else
+        {
+            hp = UpgradeManager.GetUpgradesDemonINT(unitData.hp,RoundManager.round);
+            attack = UpgradeManager.GetUpgradesDemonINT(unitData.attack,RoundManager.round);
+            defense = UpgradeManager.GetUpgradesDemonINT(unitData.defense,RoundManager.round);
+            speed = UpgradeManager.GetUpgradeDemonFLOAT(unitData.speed,RoundManager.round);
+        }
         attackRange = unitData.attackRange;
         attackSpeed = unitData.attackSpeed;
         manaCost = unitData.manaCost; 
@@ -68,7 +78,7 @@ public class UnitBase : MonoBehaviour, IDamageable
     }
     public void AttackCheck()
     {
-        RaycastHit2D touched = Physics2D.Raycast(transform.position,new Vector3(Mathf.Sign(transform.localScale.x),0,0),attackRange,layer);
+        RaycastHit2D touched = Physics2D.Raycast(transform.position,new Vector3(Mathf.Sign(transform.localScale.x),0,0),attackRange,targetLayer);
         if (touched.collider != null)
         {
             currentTarget=touched.collider.GetComponent<IDamageable>();
