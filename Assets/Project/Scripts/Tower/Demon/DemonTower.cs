@@ -21,9 +21,9 @@ public class DemonTower : TowerBase
     }
     protected override void GetStat()
     {
-        maxHp = UpgradeManager.GetUpgradesDemonINT(maxHp,RoundManager.round);
-        maxMana = UpgradeManager.GetUpgradeDemonFLOAT(maxMana,RoundManager.round);
-        manaRegenRate = UpgradeManager.GetUpgradeDemonFLOAT(manaRegenRate,RoundManager.round);
+        maxHp = UpgradeManager.GetUpgradesDemonINT(demonData.maxHp,RoundManager.round);
+        maxMana = UpgradeManager.GetUpgradeDemonFLOAT(demonData.maxMana,RoundManager.round);
+        manaRegenRate = UpgradeManager.GetUpgradeDemonFLOAT(demonData.manaRegenRate,RoundManager.round);
         hp = maxHp;
         mana = maxMana;
         RenderHp();
