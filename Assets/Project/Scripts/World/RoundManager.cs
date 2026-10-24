@@ -34,6 +34,6 @@ public class RoundManager : MonoBehaviour
     void StartOver()
     {
         round=1;
-        Render();
+        GameManager.Return();
     }
 }

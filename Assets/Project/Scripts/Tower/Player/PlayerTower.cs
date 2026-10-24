@@ -11,13 +11,28 @@ public class PlayerTower : TowerBase
     private float timer;
     void Awake()
     {
-        GetStat(towerData);
+        GetStat();
         timer=1f;
+        RenderHp();
     }
     public int currentSpirits => ActiveUnitCount;
+    protected override void GetStat()
+    {
+        maxHp = UpgradeManager.GetUpgradesINT(towerData.maxHp,0);
+        maxMana = UpgradeManager.GetUpgradesFLOAT(towerData.maxMana,4);
+        manaRegenRate = UpgradeManager.GetUpgradesFLOAT(towerData.manaRegenRate,5);
+        int tmp=0;
+        for(int i=0;i<3;i++){
+            tmp = Mathf.Max(tmp,UpgradeManager.GetUpgradesINT(towerData.spiritLimit,i));
+        }
+        spiritLimit = tmp;
+        hp = maxHp;
+        mana = maxMana;
+        RenderHp();
+    }
     void Update()
     {
-        RenderHp();
+        
     }
     void FixedUpdate()
     {

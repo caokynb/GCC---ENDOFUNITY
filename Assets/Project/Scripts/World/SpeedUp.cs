@@ -7,6 +7,7 @@ public class SpeedUp : MonoBehaviour
     void Awake()
     {
         sped=false;
+        Time.timeScale=1f;
     }
     public void Speed()
     {

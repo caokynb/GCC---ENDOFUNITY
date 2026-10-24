@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
-    [SerializeField] public static int hpUpgrade=0;
-    [SerializeField] public static int atkUpgrade=0;
-    [SerializeField] public static int defUpgrade=0;
-    [SerializeField] public static int spdUpgrade=0;
-    [SerializeField] public static int manaUpgrade=0;
-    [SerializeField] public static int manaRegenUpgrade=0;
+    public static int hpUpgrade=0;
+    public static int atkUpgrade=0;
+    public static int defUpgrade=0;
+    public static int spdUpgrade=0;
+    public static int manaUpgrade=0;
+    public static int manaRegenUpgrade=0;
     private static float upgradeUnit=0.02f;
     private static float demonUpgrade=0.01f;
     // Increase by 2% per upgrade (Unit)

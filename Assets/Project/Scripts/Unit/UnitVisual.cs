@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class UnitVisual : MonoBehaviour
+public static class UnitVisual
 {
     public static IEnumerator Flash(SpriteRenderer sprite)
     {   
@@ -10,7 +10,6 @@ public class UnitVisual : MonoBehaviour
         sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         sprite.color = org;
-        yield return null;
     }
     public static void RenderHp(TextMeshPro text,int hp)
     {

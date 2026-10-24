@@ -21,7 +21,7 @@ public class CamController : MonoBehaviour
     }
     void Update()
     {
-        if(transform.position.x>=0f && transform.position.x<=24f) rb.linearVelocityX = moveAction.ReadValue<float>() * cameraMoveSpeed;
-        else transform.position = new Vector3((int)transform.position.x,0,0);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x,0f,24f),0,-10);
+        rb.linearVelocityX = moveAction.ReadValue<float>() * cameraMoveSpeed;
     }
 }

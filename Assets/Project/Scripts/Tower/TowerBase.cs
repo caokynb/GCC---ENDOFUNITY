@@ -30,29 +30,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageable
         }
     }
     public Vector3 SpawnPosition => tf.position;
-    protected void GetStat(TowerSO towerData)
-    {
-        if (gameObject.layer == LayerMask.NameToLayer("Elemental"))
-        {
-            maxHp = UpgradeManager.GetUpgradesINT(towerData.maxHp,0);
-            maxMana = UpgradeManager.GetUpgradesFLOAT(towerData.maxMana,4);
-            manaRegenRate = UpgradeManager.GetUpgradesFLOAT(towerData.manaRegenRate,5);
-            int tmp=0;
-            for(int i=0;i<3;i++){
-                tmp = Mathf.Max(tmp,UpgradeManager.GetUpgradesINT(towerData.spiritLimit,i));
-            }
-            spiritLimit = tmp;
-        }
-        else
-        {
-            maxHp = UpgradeManager.GetUpgradesDemonINT(towerData.maxHp,RoundManager.round);
-            maxMana = UpgradeManager.GetUpgradeDemonFLOAT(towerData.maxMana,RoundManager.round);
-            manaRegenRate = UpgradeManager.GetUpgradeDemonFLOAT(towerData.manaRegenRate,RoundManager.round);
-        }
-        hp = maxHp;
-        mana = maxMana;
-        RenderHp();
-    }
+    protected abstract void GetStat();
     public bool SpendMana(float deductedMana)
     {
         if(deductedMana<0f || mana<deductedMana) return false;

@@ -9,7 +9,7 @@ public class AnimationEventChecker : MonoBehaviour
     }
     public void Attack()
     {
-        unit.currentTarget.TakeDamage(unit.attack,unit.element);
+        if(unit.currentTarget!=null) unit.currentTarget.TakeDamage(unit.attack,unit.element);
     }
 
     public void Die()

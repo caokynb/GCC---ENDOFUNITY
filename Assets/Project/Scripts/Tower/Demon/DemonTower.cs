@@ -14,10 +14,19 @@ public class DemonTower : TowerBase
 
     void Awake()
     {
-        GetStat(demonData);
+        GetStat();
         GetTimer(1);
         GetTimer(2);
         GetTimer(3);
+    }
+    protected override void GetStat()
+    {
+        maxHp = UpgradeManager.GetUpgradesDemonINT(maxHp,RoundManager.round);
+        maxMana = UpgradeManager.GetUpgradeDemonFLOAT(maxMana,RoundManager.round);
+        manaRegenRate = UpgradeManager.GetUpgradeDemonFLOAT(manaRegenRate,RoundManager.round);
+        hp = maxHp;
+        mana = maxMana;
+        RenderHp();
     }
     void GetTimer(int n)
     {
@@ -29,8 +38,6 @@ public class DemonTower : TowerBase
     void FixedUpdate()
     {
         RegenMana();
-        RenderHp();
-
         TrySpawn(ref timer1,fireDemon,1);
         TrySpawn(ref timer2,waterDemon,2);
         TrySpawn(ref timer3,groundDemon,3);
@@ -44,6 +51,7 @@ public class DemonTower : TowerBase
     {
         if (timer>0f) timer-=Time.fixedDeltaTime;
         if (timer>0f || demon==null) return;
+        // sorry em chua biet fix cai nay cho hop li anh aj, tai vi thang demon la gameobject nen e chua biet lay mana cost cua no
         UnitBase demonPrefab = demon.GetComponent<UnitBase>();
         if (demonPrefab != null && SummonManager.Instance.Summon(this, demonPrefab)) GetTimer(n);
     }

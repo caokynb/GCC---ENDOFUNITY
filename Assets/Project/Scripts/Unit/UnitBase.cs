@@ -11,6 +11,7 @@ public class UnitBase : MonoBehaviour, IDamageable
     [SerializeField] private TextMeshPro text;
     [SerializeField] public Animator anim;
     private LayerMask targetLayer;
+    private Coroutine flash;
     private bool isElemental;
     public StateMachine stateMachine {get; private set;}
     public MarchState marchState {get; private set;}
@@ -70,7 +71,6 @@ public class UnitBase : MonoBehaviour, IDamageable
         anim.SetFloat("Speed",Math.Sign(Mathf.Abs(rb.linearVelocityX)));
         stateMachine.Tick();
         AttackCheck();
-        UnitVisual.RenderHp(text,hp);
     }
     void FixedUpdate()
     {
@@ -116,13 +116,15 @@ public class UnitBase : MonoBehaviour, IDamageable
             break;
         }
         hp-=(int)(attack*penalty-defense);
-        StartCoroutine(UnitVisual.Flash(sprite));   
+        if(flash==null) StartCoroutine(UnitVisual.Flash(sprite));
+        else StopCoroutine(flash);
         if(hp<=0)
         {
             cd.enabled=false;
             rb.constraints=RigidbodyConstraints2D.FreezePositionX;
             anim.SetTrigger("Die");
         }
+        UnitVisual.RenderHp(text,hp);
     }
     public void Death()
     {
